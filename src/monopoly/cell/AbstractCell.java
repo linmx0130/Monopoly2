@@ -4,7 +4,7 @@ import monopoly.Player;
  * Created by Mengxiao Lin on 2016/4/11.
  */
 public abstract class AbstractCell {
-    private int id;
+    private int id, x, y;
     private String name;
     private String description;
     private AbstractCell nextCell;
@@ -32,6 +32,22 @@ public abstract class AbstractCell {
 
     public String getDescription() {
         return description;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     public abstract void arrivedEffect(Player player);

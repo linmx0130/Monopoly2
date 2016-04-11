@@ -12,6 +12,7 @@ public class Player {
     private double money;
     private ArrayList<PropertyCell> propertyCells;
     private String name;
+    int id;
     public Player(String name){
         this.name=name;
     }
@@ -61,5 +62,13 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
