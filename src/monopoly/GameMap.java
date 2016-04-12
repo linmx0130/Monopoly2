@@ -1,7 +1,12 @@
 package monopoly;
 import monopoly.cell.AbstractCell;
+import monopoly.cell.CellFactory;
+
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by Mengxiao Lin on 2016/4/11.
@@ -9,17 +14,56 @@ import java.util.List;
 public class GameMap {
     private int width, height;
     private ArrayList<AbstractCell> cellList;
-    public GameMap(){
+    private HashMap<Player, AbstractCell> playerPositions;
+    private AbstractCell startCell;
+    public GameMap() {
         cellList = new ArrayList<>();
+        playerPositions = new HashMap<>();
     }
-    public void addCell(AbstractCell cell){
+
+    public void loadMapFromStream(InputStream is) {
+        Scanner reader = new Scanner(is);
+        CellFactory cellFactory= new CellFactory();
+        height = reader.nextInt();
+        width = reader.nextInt();
+        int cellCount = reader.nextInt();
+        int startCell = reader.nextInt();
+        for (int i=0;i<cellCount;++i){
+            int cellId= reader.nextInt();
+            String cellType= reader.next();
+            cellFactory.buildCellFromScanner(cellId, cellType, reader);
+        }
+        for (int i=0;i<cellCount;++i){
+            int x = reader.nextInt();
+            int y =reader.nextInt();
+            getCellById(x).setNextCell(getCellById(y));
+        }
+        cellList.stream().forEach(e -> {
+            if (e.getNextCell() ==null){
+                throw new RuntimeException("Map format error!");
+            }
+        });
+        this.startCell= getCellById(startCell);
+    }
+
+    public void addCell(AbstractCell cell) {
         cellList.add(cell);
     }
-    public AbstractCell getCellById(int id){
+
+    public AbstractCell getCellById(int id) {
         return cellList.stream().filter(e -> e.getId() == id).findFirst().get();
     }
-    public List<AbstractCell> getCellList(){
+
+    public List<AbstractCell> getCellList() {
         return cellList;
+    }
+
+    public void setPlayerToCell(Player player, AbstractCell cell) {
+        playerPositions.put(player, cell);
+    }
+
+    public AbstractCell getPlayerPosition(Player player) {
+        return playerPositions.get(player);
     }
 
     public int getWidth() {
@@ -36,5 +80,9 @@ public class GameMap {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public AbstractCell getStartCell() {
+        return startCell;
     }
 }

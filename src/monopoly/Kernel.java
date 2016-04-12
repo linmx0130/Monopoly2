@@ -2,6 +2,7 @@ package monopoly;
 
 import message.MessageFactory;
 import message.MessagePipe;
+import monopoly.cell.AbstractCell;
 
 /**
  * Created by Mengxiao Lin on 2016/4/11.
@@ -12,6 +13,7 @@ public class Kernel {
     private MessageFactory[] messageFactories;
     private Player[] players;
     private int currentPlayer;
+    private int gameTurn;
     private Kernel(int userCount){
         gameMap=new GameMap();
         if (userCount>4){
@@ -21,6 +23,7 @@ public class Kernel {
         messageFactories= new MessageFactory[userCount];
         players = new Player[userCount];
         currentPlayer = 0;
+        gameTurn = 0;
     }
     private static Kernel instance;
     public static void createInstance(int userCount){
@@ -65,5 +68,27 @@ public class Kernel {
         players[pos]=player;
         messageFactories[pos]=messageFactory;
         messagePipes[pos]=messagePipe;
+        gameMap.setPlayerToCell(player, gameMap.getStartCell());
+    }
+    public Player getCurrentPlayer(){
+        return players[currentPlayer];
+    }
+    public int getGameTurn(){
+        return gameTurn;
+    }
+    public void nextPlayer(){
+        if (++currentPlayer == players.length) {
+            currentPlayer = 0;
+            gameTurn++;
+        }
+    }
+    public void playerMove(int step){
+        AbstractCell nowPos = gameMap.getPlayerPosition(players[currentPlayer]);
+        for (int i=0;i<step;++i){
+            nowPos = nowPos.getNextCell();
+        }
+        gameMap.setPlayerToCell(players[currentPlayer], nowPos);
+        nowPos.arrivedEffect(players[currentPlayer]);
+        nextPlayer();
     }
 }

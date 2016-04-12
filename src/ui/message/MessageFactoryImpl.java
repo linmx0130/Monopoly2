@@ -16,7 +16,9 @@ public class MessageFactoryImpl implements MessageFactory {
         this.messageTypeClassMap = new HashMap<>();
         registerMessageType("PropertyMessage", PropertyMessageImpl.class);
         registerMessageType("YesOrNoQuestion", YesOrNoQuestionImpl.class);
-        registerMessageType("FaultMessage", FaultMessage.class);
+        registerMessageType("FaultMessage", FaultMessageImpl.class);
+        registerMessageType("SuccessMessage", SuccessMessageImpl.class);
+        registerMessageType("BankMessage",BankMessageImpl.class);
     }
 
     public void registerMessageType(String typename, Class typeClass) {
