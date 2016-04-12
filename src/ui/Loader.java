@@ -28,20 +28,22 @@ public class Loader {
             System.out.println("请输入第"+(i+1)+"位玩家的姓名");
             System.out.print(">> ");
             String buf = cin.nextLine().trim();
-            Kernel.getInstance().addPlayer(new Player(buf),consoleMessageFactory, consoleMessagePipe);
+            Player player = new Player(buf);
+            player.setId(i+1);
+            Kernel.getInstance().addPlayer(player,consoleMessageFactory, consoleMessagePipe);
         }
     }
     public static void main(String args[]){
         consoleMessageFactory= new MessageFactoryImpl();
         consoleMessagePipe=new MessagePipeImpl();
+        askUserInformation();
         // load map
         try {
             Kernel.getInstance().getGameMap().loadMapFromStream(new FileInputStream("map.txt"));
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Map file not found!");
         }
-        askUserInformation();
-
+        Kernel.getInstance().initPlayers();
         //main loop
         do {
             MainMenu.showMainMenu(Kernel.getInstance().getCurrentPlayer());

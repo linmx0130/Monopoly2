@@ -31,7 +31,12 @@ public class GameMap {
         for (int i=0;i<cellCount;++i){
             int cellId= reader.nextInt();
             String cellType= reader.next();
-            cellFactory.buildCellFromScanner(cellId, cellType, reader);
+            int x =reader.nextInt();
+            int y =reader.nextInt();
+            AbstractCell cell = cellFactory.buildCellFromScanner(cellId, cellType, reader);
+            cell.setX(x);
+            cell.setY(y);
+            addCell(cell);
         }
         for (int i=0;i<cellCount;++i){
             int x = reader.nextInt();
@@ -44,6 +49,7 @@ public class GameMap {
             }
         });
         this.startCell= getCellById(startCell);
+
     }
 
     public void addCell(AbstractCell cell) {

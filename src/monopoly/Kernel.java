@@ -4,6 +4,10 @@ import message.MessageFactory;
 import message.MessagePipe;
 import monopoly.cell.AbstractCell;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by Mengxiao Lin on 2016/4/11.
  */
@@ -14,6 +18,7 @@ public class Kernel {
     private Player[] players;
     private int currentPlayer;
     private int gameTurn;
+    private Bank bank;
     private Kernel(int userCount){
         gameMap=new GameMap();
         if (userCount>4){
@@ -24,6 +29,7 @@ public class Kernel {
         players = new Player[userCount];
         currentPlayer = 0;
         gameTurn = 0;
+        bank = new Bank(userCount);
     }
     private static Kernel instance;
     public static void createInstance(int userCount){
@@ -68,7 +74,6 @@ public class Kernel {
         players[pos]=player;
         messageFactories[pos]=messageFactory;
         messagePipes[pos]=messagePipe;
-        gameMap.setPlayerToCell(player, gameMap.getStartCell());
     }
     public Player getCurrentPlayer(){
         return players[currentPlayer];
@@ -82,6 +87,13 @@ public class Kernel {
             gameTurn++;
         }
     }
+    public List<Player> getPlayers(){
+        ArrayList<Player> ret = new ArrayList<>();
+        for (int i=0;i<players.length;++i){
+            ret.add(players[i]);
+        }
+        return ret;
+    }
     public void playerMove(int step){
         AbstractCell nowPos = gameMap.getPlayerPosition(players[currentPlayer]);
         for (int i=0;i<step;++i){
@@ -90,5 +102,15 @@ public class Kernel {
         gameMap.setPlayerToCell(players[currentPlayer], nowPos);
         nowPos.arrivedEffect(players[currentPlayer]);
         nextPlayer();
+    }
+    public void initPlayers(){
+        Arrays.stream(players).forEach(e -> {
+            gameMap.setPlayerToCell(e, gameMap.getStartCell());
+            e.setMoney(10000);
+        });
+    }
+
+    public Bank getBank() {
+        return bank;
     }
 }

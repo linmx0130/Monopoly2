@@ -8,8 +8,8 @@ import java.util.Scanner;
  * Created by Mengxiao Lin on 2016/4/11.
  */
 public class YesOrNoQuestionImpl extends YesOrNoQuestion{
-    public YesOrNoQuestionImpl(String description){
-        super(description);
+    public YesOrNoQuestionImpl(){
+        super("");
     }
     @Override
     public void action() {

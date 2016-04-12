@@ -1,0 +1,33 @@
+5 5 16 1
+1 EmptyCell 0 0
+2 BankCell 0 1
+3 PropertyCell 0 2 上海 2000
+4 PropertyCell 0 3 杭州 1500
+5 PropertyCell 0 4 南京 2000
+6 PropertyCell 1 4 合肥 1000
+7 EmptyCell 2 4
+8 PropertyCell 3 4 成都 1500
+9 PropertyCell 4 4 昆明 1200
+10 PropertyCell 4 3 拉萨 1000
+11 PropertyCell 4 2 甘肃 1200
+12 EmptyCell 4 1
+13 PropertyCell 4 0 北京 2000
+14 PropertyCell 3 0 天津 2000
+15 PropertyCell 2 0 哈尔滨 1000
+16 PropertyCell 1 0 吉林 1000
+1 2
+2 3
+3 4
+4 5
+5 6
+6 7
+7 8
+8 9
+9 10
+10 11
+11 12
+12 13
+13 14
+14 15
+15 16
+16 1
