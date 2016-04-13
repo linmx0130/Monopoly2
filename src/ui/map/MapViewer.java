@@ -3,10 +3,7 @@ package ui.map;
 import monopoly.GameMap;
 import monopoly.Kernel;
 import monopoly.Player;
-import monopoly.cell.AbstractCell;
-import monopoly.cell.BankCell;
-import monopoly.cell.EmptyCell;
-import monopoly.cell.PropertyCell;
+import monopoly.cell.*;
 
 /**
  * Created by Mengxiao Lin on 2016/4/11.
@@ -16,6 +13,7 @@ public class MapViewer {
     private static String BLANK = "  ";
     private static String EMPTY_CELL = "空";
     private static String BANK_CELL="银";
+    private static String NEWS_CELL="新";
     private static final String CELL_OWNER_MARK= "◎①②③④";
     private static final String PLAYER_MARK=" αβγδ";
     public MapViewer(GameMap gameMap){
@@ -32,6 +30,7 @@ public class MapViewer {
         if (cell instanceof EmptyCell) return EMPTY_CELL;
         if (cell instanceof PropertyCell) return getPropertyMark((PropertyCell)cell);
         if (cell instanceof BankCell) return BANK_CELL;
+        if (cell instanceof NewsCell) return NEWS_CELL;
         return "崩";
     }
     public String[][] getMapStringBuffer(){

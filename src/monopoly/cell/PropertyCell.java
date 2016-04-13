@@ -48,6 +48,7 @@ public class PropertyCell extends AbstractCell{
                 setOwner(player);
                 PropertyMessage message = (PropertyMessage) Kernel.getInstance().getMessageFactory().createMessage("PropertyMessage");
                 message.setPlayer(owner);
+                owner.getPropertyCells().add(this);
                 message.setMoney(getBuyingPrice());
                 message.setCell(this);
                 message.setActionType(PropertyMessage.ActionType.BUYING);
@@ -69,6 +70,7 @@ public class PropertyCell extends AbstractCell{
             }else {
                 double chargeMoney= getPassingCost();
                 if (player.chargeForce(chargeMoney)){
+                    owner.setMoney(owner.getMoney()+chargeMoney);
                     PropertyMessage message = (PropertyMessage) Kernel.getInstance().getMessageFactory().createMessage("PropertyMessage");
                     message.setActionType(PropertyMessage.ActionType.PASSING);
                     message.setCell(this);

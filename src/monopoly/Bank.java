@@ -40,4 +40,10 @@ public class Bank {
             Kernel.getInstance().getMessagePipe().onMessageArrived(successMessage);
         }
     }
+    public void modifyMoney(Player player, double deltaAmount){
+        if (deposits[player.getId()-1] + deltaAmount < 0){
+            throw new RuntimeException("Deposit not enough!");
+        }
+        deposits[player.getId()-1] += deltaAmount;
+    }
 }
