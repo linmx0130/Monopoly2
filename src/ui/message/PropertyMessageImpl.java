@@ -11,7 +11,7 @@ public class PropertyMessageImpl extends PropertyMessage {
                 System.out.println(
                         getPlayer().getName()+
                         " 路过 "+ getCell().getName()+
-                        " 向主人 "+getCell().getOwner() +
+                        " 向主人 "+getCell().getOwner().getName() +
                         " 支付 " +getMoney() + "元作为过路费");
                 break;
             case BUYING:

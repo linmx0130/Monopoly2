@@ -49,6 +49,7 @@ public class PropertyCell extends AbstractCell{
                 PropertyMessage message = (PropertyMessage) Kernel.getInstance().getMessageFactory().createMessage("PropertyMessage");
                 message.setPlayer(owner);
                 message.setMoney(getBuyingPrice());
+                message.setCell(this);
                 message.setActionType(PropertyMessage.ActionType.BUYING);
                 Kernel.getInstance().getMessagePipe().onMessageArrived(message);
             } else {
