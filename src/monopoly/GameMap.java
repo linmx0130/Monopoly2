@@ -41,7 +41,10 @@ public class GameMap {
         for (int i=0;i<cellCount;++i){
             int x = reader.nextInt();
             int y =reader.nextInt();
-            getCellById(x).setNextCell(getCellById(y));
+            AbstractCell xCell = getCellById(x);
+            AbstractCell yCell =getCellById(y);
+            xCell.setNextCell(yCell);
+            yCell.setPreviousCell(xCell);
         }
         cellList.stream().forEach(e -> {
             if (e.getNextCell() ==null){

@@ -22,4 +22,20 @@ public class Util {
         } while (!pass);
         return value;
     }
+    public static double getDoubleFromScanner(Scanner scanner){
+        boolean pass;
+        double value = -1;
+        do {
+            pass = true;
+            System.out.print(">> ");
+            String buf = scanner.nextLine().trim();
+            try {
+                value = Double.parseDouble(buf);
+            } catch (NumberFormatException e){
+                pass =false;
+                System.out.println("输入错误，请重新输入！");
+            }
+        } while (!pass);
+        return value;
+    }
 }

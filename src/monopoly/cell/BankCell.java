@@ -17,4 +17,9 @@ public class BankCell extends AbstractCell{
         bankMessage.setPlayer(player);
         Kernel.getInstance().getMessagePipe().onMessageArrived(bankMessage);
     }
+
+    @Override
+    public void moveOverEffect(Player player) {
+        arrivedEffect(player);
+    }
 }

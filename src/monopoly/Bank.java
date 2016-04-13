@@ -28,4 +28,16 @@ public class Bank {
             Kernel.getInstance().getMessagePipe().onMessageArrived(faultMessage);
         }
     }
+    public void withdraw(Player player, double amount){
+        if (getDeposit(player)< amount){
+            FaultMessage faultMessage= (FaultMessage) Kernel.getInstance().getMessageFactory().createMessage("FaultMessage");
+            faultMessage.setDescription("存款不足，无法取款！");
+            Kernel.getInstance().getMessagePipe().onMessageArrived(faultMessage);
+        }else{
+            deposits[player.getId()-1] -=amount;
+            SuccessMessage successMessage = (SuccessMessage) Kernel.getInstance().getMessageFactory().createMessage("SuccessMessage");
+            successMessage.setDescription("成功取款"+ amount+"元！现在 "+ player.getName()+" 存款为"+ deposits[player.getId()-1]+"元");
+            Kernel.getInstance().getMessagePipe().onMessageArrived(successMessage);
+        }
+    }
 }

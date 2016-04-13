@@ -2,6 +2,7 @@ package monopoly;
 
 import message.MessageFactory;
 import message.MessagePipe;
+import monopoly.card.CardFactory;
 import monopoly.cell.AbstractCell;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class Kernel {
     private int currentPlayer;
     private int gameTurn;
     private Bank bank;
+    private CardFactory cardFactory;
     private Kernel(int userCount){
         gameMap=new GameMap();
         if (userCount>4){
@@ -30,6 +32,7 @@ public class Kernel {
         currentPlayer = 0;
         gameTurn = 0;
         bank = new Bank(userCount);
+        cardFactory= new CardFactory();
     }
     private static Kernel instance;
     public static void createInstance(int userCount){
@@ -94,14 +97,22 @@ public class Kernel {
         }
         return ret;
     }
-    public void playerMove(int step){
-        AbstractCell nowPos = gameMap.getPlayerPosition(players[currentPlayer]);
-        for (int i=0;i<step;++i){
-            nowPos = nowPos.getNextCell();
-        }
-        gameMap.setPlayerToCell(players[currentPlayer], nowPos);
-        nowPos.arrivedEffect(players[currentPlayer]);
-        nextPlayer();
+
+    public void playerMove(){
+        Player currentPlayer = players[this.currentPlayer];
+        AbstractCell nowPos = gameMap.getPlayerPosition(currentPlayer);
+        if (currentPlayer.getOrientation() == 1) nowPos = nowPos.getNextCell();
+        else nowPos = nowPos.getPreviousCell();
+        gameMap.setPlayerToCell(currentPlayer, nowPos);
+        nowPos.moveOverEffect(currentPlayer);
+    }
+    public void playerMoveEnd(){
+        Player currentPlayer = players[this.currentPlayer];
+        AbstractCell nowPos = gameMap.getPlayerPosition(currentPlayer);
+        if (currentPlayer.getOrientation() == 1) nowPos = nowPos.getNextCell();
+        else nowPos = nowPos.getPreviousCell();
+        gameMap.setPlayerToCell(currentPlayer, nowPos);
+        nowPos.arrivedEffect(currentPlayer);
     }
     public void initPlayers(){
         Arrays.stream(players).forEach(e -> {
@@ -112,5 +123,9 @@ public class Kernel {
 
     public Bank getBank() {
         return bank;
+    }
+
+    public CardFactory getCardFactory() {
+        return cardFactory;
     }
 }

@@ -7,7 +7,7 @@ public abstract class AbstractCell {
     private int id, x, y;
     private String name;
     private String description;
-    private AbstractCell nextCell;
+    private AbstractCell nextCell, previousCell;
     protected AbstractCell(int id, String name, String description){
         this.id= id;
         this.name = name;
@@ -24,6 +24,14 @@ public abstract class AbstractCell {
 
     public AbstractCell getNextCell() {
         return nextCell;
+    }
+
+    public AbstractCell getPreviousCell() {
+        return previousCell;
+    }
+
+    public void setPreviousCell(AbstractCell previousCell) {
+        this.previousCell = previousCell;
     }
 
     public String getName() {
@@ -51,4 +59,7 @@ public abstract class AbstractCell {
     }
 
     public abstract void arrivedEffect(Player player);
+    public void moveOverEffect(Player player){
+        //no effect for most cell
+    }
 }

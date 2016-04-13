@@ -35,7 +35,11 @@ public class MainMenu {
                     Random random=new Random();
                     int step = random.nextInt(6)+1;
                     System.out.println(" 您投出了"+step+"！");
-                    kernel.playerMove(step);
+                    for (int i=1 ;i<step ;++i) {
+                        kernel.playerMove();
+                    }
+                    kernel.playerMoveEnd();
+                    kernel.nextPlayer();
                     waiting = false;
                     break;
                 default:

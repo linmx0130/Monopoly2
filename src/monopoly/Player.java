@@ -1,5 +1,6 @@
 package monopoly;
 
+import monopoly.card.AbstractCard;
 import monopoly.cell.PropertyCell;
 
 import java.util.ArrayList;
@@ -11,12 +12,16 @@ import java.util.List;
 public class Player {
     private double money;
     private ArrayList<PropertyCell> propertyCells;
+    private ArrayList<AbstractCard> cards;
     private String name;
     int id;
+    int orientation;
     public Player(String name){
         this.name=name;
+        propertyCells = new ArrayList<>();
+        cards = new ArrayList<>();
+        orientation = 1;
     }
-
     public double getMoney() {
         return money;
     }
@@ -70,5 +75,16 @@ public class Player {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(int orientation) {
+        if (orientation != 1 && orientation!=-1){
+            throw new RuntimeException("Wrong value for orientation!");
+        }
+        this.orientation = orientation;
     }
 }
