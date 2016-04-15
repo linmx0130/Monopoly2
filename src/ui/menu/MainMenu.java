@@ -2,6 +2,7 @@ package ui.menu;
 
 import monopoly.Kernel;
 import monopoly.Player;
+import monopoly.cell.AbstractCell;
 import ui.Util;
 import ui.map.MapViewer;
 
@@ -23,6 +24,7 @@ public class MainMenu {
             System.out.println("玩家 " + player.getName() +" ，现在是第" + kernel.getGameTurn() + "回合，请问你要做什么？");
             System.out.println(" 0 - 查看地图");
             System.out.println(" 1 - 查看原始地图");
+            System.out.println(" 4 - 查看前后指定步数的具体信息");
             System.out.println(" 5 - 查看所有玩家的资产信息");
             System.out.println(" 6 - 想看的都看了，心满意足地扔骰子前进！");
             int choose = Util.getIntFromScanner(new Scanner(System.in));
@@ -32,6 +34,9 @@ public class MainMenu {
                     break;
                 case 1:
                     mapViewer.printMap();
+                    break;
+                case 4:
+                    showCellInformation();
                     break;
                 case 5:
                     showPlayerPropertyInformation();
@@ -79,5 +84,27 @@ public class MainMenu {
             outer[i]=buffer.get(i);
         }
         Util.printTable(outer);
+    }
+    private static void showCellInformation(){
+        Scanner cin = new Scanner(System.in);
+        System.out.println("请输入要查看的地块与您当前位置相差的步数，向前输入正数，向后负数，输入非数字退出：");
+        System.out.print(">> ");
+        String buf = cin.nextLine().trim();
+        int step;
+        try {
+            step = Integer.parseInt(buf);
+        } catch(NumberFormatException e){
+            return ;
+        }
+        AbstractCell nowPos = Kernel.getInstance().getGameMap().getPlayerPosition(Kernel.getInstance().getCurrentPlayer());
+        if (step > 0 ){
+            for (int i=0;i<step; ++i) nowPos = nowPos.getNextCell();
+        }else{
+            step = -step;
+            for (int i=0;i<step; ++i) nowPos = nowPos.getPreviousCell();
+        }
+        nowPos.getCellInformation().stream().forEach(dataPair ->
+            System.out.println(dataPair.getFirst()+"："+dataPair.getSecond())
+        );
     }
 }

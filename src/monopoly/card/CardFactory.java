@@ -16,6 +16,7 @@ public class CardFactory {
         cardTypeMap= new HashMap<>();
         cardRate = new ArrayList<>();
         addCard("TurnOrientationCard", TurnOrientationCard.class, 1);
+        addCard("LandCard", LandCard.class, 1);
     }
     void addCard(String typeName, Class cardType, double rate){
         cardTypeList.add(typeName);

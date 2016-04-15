@@ -4,7 +4,12 @@ import message.FaultMessage;
 import message.PropertyMessage;
 import message.YesOrNoQuestion;
 import monopoly.Kernel;
+import monopoly.Pair;
 import monopoly.Player;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Mengxiao Lin on 2016/4/11.
@@ -113,5 +118,17 @@ public class PropertyCell extends AbstractCell{
 
     public void setOwner(Player owner) {
         this.owner = owner;
+    }
+
+    @Override
+    public List<Pair<String, String>> getCellInformation() {
+        List<Pair<String, String>> ret = new ArrayList<>();
+        ret.add(new Pair<>("类型","Property"));
+        ret.add(new Pair<>("名称", getName()));
+        ret.add(new Pair<>("描述", getDescription()));
+        ret.add(new Pair<>("初始价格", Double.toString(getBasePrice())));
+        ret.add(new Pair<>("当前等级", Integer.toString(getLevel())+"级"));
+        ret.add(new Pair<>("拥有者", owner == null ? "<可供出售>" : owner.getName()));
+        return ret;
     }
 }

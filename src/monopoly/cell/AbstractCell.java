@@ -1,5 +1,10 @@
 package monopoly.cell;
+import monopoly.Pair;
 import monopoly.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Mengxiao Lin on 2016/4/11.
  */
@@ -61,5 +66,11 @@ public abstract class AbstractCell {
     public abstract void arrivedEffect(Player player);
     public void moveOverEffect(Player player){
         //no effect for most cell
+    }
+    public List<Pair<String, String>> getCellInformation(){
+        ArrayList<Pair<String, String>> ret =new ArrayList<>();
+        ret.add(new Pair<>("类型", name));
+        ret.add(new Pair<>("描述", description));
+        return ret;
     }
 }
