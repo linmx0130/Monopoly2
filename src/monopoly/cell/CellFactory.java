@@ -18,6 +18,8 @@ public class CellFactory {
                     double basePrice = reader.nextDouble();
                     return new PropertyCell(id,name,name,basePrice);
                 }
+            case "CardCell":
+                return new CardCell(id);
             case "NewsCell":
                 return new NewsCell(id);
             default:

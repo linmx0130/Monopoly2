@@ -2,11 +2,13 @@ package ui.menu;
 
 import monopoly.Kernel;
 import monopoly.Player;
+import monopoly.card.AbstractCard;
 import monopoly.cell.AbstractCell;
 import ui.Util;
 import ui.map.MapViewer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -24,6 +26,7 @@ public class MainMenu {
             System.out.println("玩家 " + player.getName() +" ，现在是第" + kernel.getGameTurn() + "回合，请问你要做什么？");
             System.out.println(" 0 - 查看地图");
             System.out.println(" 1 - 查看原始地图");
+            System.out.println(" 2 - 使用道具");
             System.out.println(" 4 - 查看前后指定步数的具体信息");
             System.out.println(" 5 - 查看所有玩家的资产信息");
             System.out.println(" 6 - 想看的都看了，心满意足地扔骰子前进！");
@@ -34,6 +37,9 @@ public class MainMenu {
                     break;
                 case 1:
                     mapViewer.printMap();
+                    break;
+                case 2:
+                    showCardMenu();
                     break;
                 case 4:
                     showCellInformation();
@@ -106,5 +112,49 @@ public class MainMenu {
         nowPos.getCellInformation().stream().forEach(dataPair ->
             System.out.println(dataPair.getFirst()+"："+dataPair.getSecond())
         );
+    }
+    public static void showCardMenu(){
+        Player player = Kernel.getInstance().getCurrentPlayer();
+        HashMap<String, Integer> cardCountMap = new HashMap<>();
+        player.getCards().forEach(c-> {
+            if (cardCountMap.keySet().contains(c.getName())){
+                cardCountMap.put(c.getName(),cardCountMap.get(c.getName())+1);
+            }else {
+                cardCountMap.put(c.getName(), 1);
+            }
+        });
+        ArrayList<String> cardNameList = new ArrayList<>();
+        cardCountMap.keySet().forEach(e -> cardNameList.add(e));
+        if (cardNameList.size() == 0 ){
+            System.out.println("您没有卡牌可用！");
+            return ;
+        }
+        System.out.println("您可用的卡牌列表如下：");
+        for (int i = 0;i<cardNameList.size();++i){
+            System.out.println(" "+(i+1)+"."+cardNameList.get(i)+" "+cardCountMap.get(cardNameList.get(i))+"张");
+        }
+        System.out.println("请输入您希望使用的卡牌的编号，若输入的数字不在上述之中则放弃使用");
+        int choose = Util.getIntFromScanner(new Scanner(System.in));
+        if (choose <=0 || choose > cardNameList.size()){
+            System.out.println("放弃使用！");
+            return ;
+        }
+        AbstractCard cardToUse = player.getCards().stream()
+                .filter(c -> c.getName().equals(cardNameList.get(choose-1)))
+                .findFirst().get();
+        Player object =null;
+        if (cardToUse.needObject()){
+            object = Util.choosePlayer("请选择使用的对象", new Scanner(System.in));
+            if (object==null){
+                System.out.println("放弃使用！");
+                return ;
+            }
+        }
+        if (!cardToUse.canBeUse(Kernel.getInstance().getCurrentPlayer(),object)){
+            System.out.println("这张卡使用条件不满足，无法使用！");
+            return ;
+        }
+        player.getCards().remove(cardToUse);
+        Kernel.getInstance().issueCard(cardToUse, Kernel.getInstance().getCurrentPlayer(), object);
     }
 }

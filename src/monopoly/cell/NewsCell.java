@@ -62,9 +62,4 @@ public class NewsCell extends AbstractCell {
         newsMessage.setPlayer(player);
         Kernel.getInstance().getMessagePipe().onMessageArrived(newsMessage);
     }
-
-    @Override
-    public void moveOverEffect(Player player) {
-        arrivedEffect(player);
-    }
 }

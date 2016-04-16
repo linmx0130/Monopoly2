@@ -2,7 +2,9 @@ package monopoly;
 
 import message.MessageFactory;
 import message.MessagePipe;
+import monopoly.card.AbstractCard;
 import monopoly.card.CardFactory;
+import monopoly.card.CardStack;
 import monopoly.cell.AbstractCell;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ public class Kernel {
     private int gameTurn;
     private Bank bank;
     private CardFactory cardFactory;
+    private CardStack cardStack;
     private Kernel(int userCount){
         gameMap=new GameMap();
         if (userCount>4){
@@ -33,6 +36,7 @@ public class Kernel {
         gameTurn = 0;
         bank = new Bank(userCount);
         cardFactory= new CardFactory();
+        cardStack = new CardStack();
     }
     private static Kernel instance;
     public static void createInstance(int userCount){
@@ -88,6 +92,7 @@ public class Kernel {
         if (++currentPlayer == players.length) {
             currentPlayer = 0;
             gameTurn++;
+            cardStack.turnAction();
         }
     }
     public List<Player> getPlayers(){
@@ -127,5 +132,8 @@ public class Kernel {
 
     public CardFactory getCardFactory() {
         return cardFactory;
+    }
+    public void issueCard(AbstractCard card, Player subject, Player object){
+        cardStack.issueCard(card, subject, object);
     }
 }

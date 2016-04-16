@@ -1,5 +1,9 @@
 package ui;
 
+import monopoly.Kernel;
+import monopoly.Player;
+
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -67,5 +71,32 @@ public class Util {
             }
             System.out.println();
         }
+    }
+    public static Player choosePlayer(String msg, Scanner scanner){
+        System.out.println(msg);
+        Kernel.getInstance().getPlayers().stream().sorted((p1,p2)-> p1.getId()-p2.getId())
+                .forEach(player -> System.out.println(player.getId()+"."+player.getName()));
+        System.out.println("0.放弃选择玩家");
+        boolean pass = false;
+        int value=0;
+        do {
+            pass = true;
+            System.out.print(">> ");
+            String buf = scanner.nextLine().trim();
+            try {
+                value = Integer.parseInt(buf);
+            } catch (NumberFormatException e){
+                pass =false;
+            }
+            if (value <0 || value > Kernel.getInstance().getPlayers().size()){
+                pass = false;
+            }
+            if (!pass){
+                System.out.println("输入错误，请重新输入！");
+            }
+        } while (!pass);
+        if (value ==0)return null;
+        int finalValue = value;
+        return Kernel.getInstance().getPlayers().stream().filter(p -> p.getId() == finalValue).findFirst().get();
     }
 }

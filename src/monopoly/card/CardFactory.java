@@ -15,15 +15,15 @@ public class CardFactory {
         cardTypeList= new ArrayList<>();
         cardTypeMap= new HashMap<>();
         cardRate = new ArrayList<>();
-        addCard("TurnOrientationCard", TurnOrientationCard.class, 1);
-        addCard("LandCard", LandCard.class, 1);
+        addCard("TurnOrientationCard", TurnOrientationCard.class, 0.01);
+        addCard("LandCard", LandCard.class, 100);
     }
-    void addCard(String typeName, Class cardType, double rate){
+    public void addCard(String typeName, Class cardType, double rate){
         cardTypeList.add(typeName);
         cardTypeMap.put(typeName, cardType);
         cardRate.add(rate);
     }
-    AbstractCard generateRandomCard(){
+    public AbstractCard generateRandomCard(){
         double sum = cardRate.stream().reduce(0.0, (a,b)-> a+b);
         double pRate = new Random().nextDouble();
         pRate *= sum;

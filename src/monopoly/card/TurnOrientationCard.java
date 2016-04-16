@@ -31,4 +31,9 @@ public class TurnOrientationCard extends AbstractCard {
     public void cardEffect() {
         object.setOrientation(-object.getOrientation());
     }
+
+    @Override
+    public boolean canBeUse(Player subject, Player object) {
+        return true;
+    }
 }

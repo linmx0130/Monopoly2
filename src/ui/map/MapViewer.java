@@ -14,6 +14,7 @@ public class MapViewer {
     private static String EMPTY_CELL = "空";
     private static String BANK_CELL="银";
     private static String NEWS_CELL="新";
+    private static String CARD_CELL="卡";
     private static final String CELL_OWNER_MARK= "◎①②③④";
     private static final String PLAYER_MARK=" αβγδ";
     public MapViewer(GameMap gameMap){
@@ -31,6 +32,7 @@ public class MapViewer {
         if (cell instanceof PropertyCell) return getPropertyMark((PropertyCell)cell);
         if (cell instanceof BankCell) return BANK_CELL;
         if (cell instanceof NewsCell) return NEWS_CELL;
+        if (cell instanceof CardCell) return CARD_CELL;
         return "崩";
     }
     public String[][] getMapStringBuffer(){

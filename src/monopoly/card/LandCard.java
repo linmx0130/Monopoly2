@@ -3,6 +3,7 @@ package monopoly.card;
 import message.SuccessMessage;
 import monopoly.Kernel;
 import monopoly.Player;
+import monopoly.cell.AbstractCell;
 import monopoly.cell.PropertyCell;
 
 /**
@@ -12,6 +13,11 @@ public class LandCard extends AbstractCard {
     private int leftTurn;
     private Player ownerBefore;
     private PropertyCell land ;
+
+    public LandCard() {
+        this.name="土地卡";
+        this.description = "可以霸占别人或者尚无主人的地产，持续5个回合，获得这段时间内这块地的收入。";
+    }
 
     @Override
     public void useCard(Player subject, Player object) {
@@ -36,10 +42,23 @@ public class LandCard extends AbstractCard {
     }
 
     @Override
+    public boolean isEffectFinished() {
+        return leftTurn <= 0;
+    }
+
+    @Override
     public void cardEffect() {
         if (--leftTurn == 0){
             land.setOwner(ownerBefore);
+            SuccessMessage msg = (SuccessMessage)Kernel.getInstance().getMessageFactory().createMessage("SuccessMessage");
+            msg.setDescription(subject.getName()+"的土地卡失效！"+land.getName()+"物归原主。");
+            Kernel.getInstance().getMessagePipe().onMessageArrived(msg);
         }
     }
 
+    @Override
+    public boolean canBeUse(Player subject, Player object) {
+        AbstractCell land = Kernel.getInstance().getGameMap().getPlayerPosition(subject);
+        return land instanceof PropertyCell;
+    }
 }

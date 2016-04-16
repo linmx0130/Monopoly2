@@ -9,6 +9,7 @@ public abstract class AbstractCard {
     protected Player subject, object;
     protected String name;
     protected String description;
+
     /**
      * use the card
      * @param subject the card owner
@@ -21,6 +22,13 @@ public abstract class AbstractCard {
      */
     public abstract boolean isLongTermCard();
 
+    /**
+     * if a long turn card return false, it will be remove from the world
+     * @return whether the effect is finished
+     */
+    public boolean isEffectFinished(){
+        return true;
+    }
     /**
      * @return whether the card need object
      */
@@ -46,4 +54,5 @@ public abstract class AbstractCard {
     public String getDescription() {
         return description;
     }
+    public abstract boolean canBeUse(Player subject, Player object);
 }

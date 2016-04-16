@@ -73,4 +73,5 @@ public abstract class AbstractCell {
         ret.add(new Pair<>("描述", description));
         return ret;
     }
+
 }

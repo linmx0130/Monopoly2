@@ -5,12 +5,12 @@
 4 PropertyCell 0 3 杭州 1500
 5 PropertyCell 0 4 南京 2000
 6 PropertyCell 1 4 合肥 1000
-7 NewsCell 2 4
+7 CardCell 2 4
 8 PropertyCell 3 4 成都 1500
 9 PropertyCell 4 4 昆明 1200
 10 PropertyCell 4 3 拉萨 1000
 11 PropertyCell 4 2 甘肃 1200
-12 EmptyCell 4 1
+12 NewsCell 4 1
 13 PropertyCell 4 0 北京 2000
 14 PropertyCell 3 0 天津 2000
 15 PropertyCell 2 0 哈尔滨 1000

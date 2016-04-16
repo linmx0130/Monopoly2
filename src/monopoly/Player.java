@@ -87,4 +87,11 @@ public class Player {
         }
         this.orientation = orientation;
     }
+
+    public ArrayList<AbstractCard> getCards() {
+        return cards;
+    }
+    public void addCard(AbstractCard card){
+        cards.add(card);
+    }
 }
