@@ -75,7 +75,7 @@ public class PropertyCell extends AbstractCell{
             }else {
                 double chargeMoney= getPassingCost();
                 if (player.chargeForce(chargeMoney)){
-                    owner.setMoney(owner.getMoney()+chargeMoney);
+                    owner.income(chargeMoney);
                     PropertyMessage message = (PropertyMessage) Kernel.getInstance().getMessageFactory().createMessage("PropertyMessage");
                     message.setActionType(PropertyMessage.ActionType.PASSING);
                     message.setCell(this);

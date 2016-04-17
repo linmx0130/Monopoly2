@@ -36,7 +36,7 @@ public class NewsCell extends AbstractCell {
             StringBuffer buffer=new StringBuffer("公开表扬第一地主");
             riches.forEach(player -> {
                 richesName.add(player.getName());
-                player.setMoney(player.getMoney()+ maxPropertyValue * 0.1);
+                player.income(maxPropertyValue * 0.1);
                 buffer.append(player.getName()+"，");
             });
             buffer.append("奖励");
@@ -71,7 +71,7 @@ public class NewsCell extends AbstractCell {
             StringBuffer buffer = new StringBuffer("公开补助土地最少者");
             poorest.forEach(player -> {
                 poorestNames.add(player.getName());
-                player.setMoney(player.getMoney()+maxPropertyValue * 0.1);
+                player.income(maxPropertyValue * 0.1);
                 buffer.append(player.getName()+"，");
             });
             buffer.append(String.valueOf(maxPropertyValue*0.1));

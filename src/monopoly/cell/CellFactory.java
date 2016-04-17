@@ -22,6 +22,8 @@ public class CellFactory {
                 return new CardCell(id);
             case "NewsCell":
                 return new NewsCell(id);
+            case "CouponCell":
+                return new CouponCell(id);
             default:
 
         }

@@ -8,9 +8,9 @@ import java.util.Random;
  * Created by Mengxiao Lin on 2016/4/13.
  */
 public class CardFactory {
-    public HashMap<String, Class> cardTypeMap;
-    public ArrayList<String> cardTypeList;
-    public ArrayList<Double> cardRate;
+    private HashMap<String, Class> cardTypeMap;
+    private ArrayList<String> cardTypeList;
+    private ArrayList<Double> cardRate;
     public CardFactory(){
         cardTypeList= new ArrayList<>();
         cardTypeMap= new HashMap<>();
@@ -40,5 +40,19 @@ public class CardFactory {
         } catch (Exception e){
             throw new RuntimeException("Error while creating card: "+typeName);
         }
+    }
+    public AbstractCard generateCard(String typename){
+        try {
+            return (AbstractCard)cardTypeMap.get(typename).newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException("Error while creating card: "+typename);
+        }
+    }
+    public HashMap<String, Class> getCardTypeMap() {
+        return cardTypeMap;
+    }
+
+    public ArrayList<String> getCardTypeList() {
+        return cardTypeList;
     }
 }

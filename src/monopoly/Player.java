@@ -16,11 +16,13 @@ public class Player {
     private String name;
     int id;
     int orientation;
+    int coupon;
     public Player(String name){
         this.name=name;
         propertyCells = new ArrayList<>();
         cards = new ArrayList<>();
         orientation = 1;
+        coupon = 0;
     }
     public double getMoney() {
         return money;
@@ -53,6 +55,11 @@ public class Player {
             this.money -= value;
             return true;
         }else{
+            //get money from bank
+            if (Kernel.getInstance().getBank().getDeposit(this)>=value){
+                Kernel.getInstance().getBank().modifyMoney(this, -value);
+                return true;
+            }
             //TODO
             throw new RuntimeException("MONEY NOT ENOUGH");
         }
@@ -93,5 +100,13 @@ public class Player {
     }
     public void addCard(AbstractCard card){
         cards.add(card);
+    }
+
+    public int getCoupon() {
+        return coupon;
+    }
+
+    public void setCoupon(int coupon) {
+        this.coupon = coupon;
     }
 }
