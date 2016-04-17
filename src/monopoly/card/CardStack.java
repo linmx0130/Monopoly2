@@ -13,11 +13,14 @@ public class CardStack {
     public CardStack(){
         longTermCards = new ArrayList<>();
     }
-    public void issueCard(AbstractCard card, Player subject, Player object){
-        card.useCard(subject, object);
+    public boolean issueCard(AbstractCard card, Player subject, Player object){
+        if (!card.useCard(subject, object)){
+            return false; //failure in use
+        }
         if (card.isLongTermCard()){
             longTermCards.add(card);
         }
+        return true;
     }
     public void turnAction(){
         longTermCards.forEach(c -> c.cardEffect());

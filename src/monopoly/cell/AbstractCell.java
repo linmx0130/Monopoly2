@@ -13,10 +13,12 @@ public abstract class AbstractCell {
     private String name;
     private String description;
     private AbstractCell nextCell, previousCell;
+    private int roadblockCount;
     protected AbstractCell(int id, String name, String description){
         this.id= id;
         this.name = name;
         this.description = description;
+        this.roadblockCount = 0;
     }
 
     public void setNextCell(AbstractCell nextCell) {
@@ -73,5 +75,13 @@ public abstract class AbstractCell {
         ret.add(new Pair<>("描述", description));
         return ret;
     }
-
+    public boolean hasRoadBlock(){
+        return roadblockCount > 0;
+    }
+    public void removeARoadBlock(){
+        if (roadblockCount >0 ) roadblockCount --;
+    }
+    public void addARoadBlock(){
+        roadblockCount++;
+    }
 }

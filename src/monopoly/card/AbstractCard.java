@@ -14,8 +14,9 @@ public abstract class AbstractCard {
      * use the card
      * @param subject the card owner
      * @param object the object, null if this card need no object player
+     * @return return true if success in using
      */
-    public abstract void useCard(Player subject, Player object);
+    public abstract boolean useCard(Player subject, Player object);
 
     /**
      * @return whether the card has long term effect

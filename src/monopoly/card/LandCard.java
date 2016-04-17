@@ -20,7 +20,7 @@ public class LandCard extends AbstractCard {
     }
 
     @Override
-    public void useCard(Player subject, Player object) {
+    public boolean useCard(Player subject, Player object) {
         this.subject = subject;
         land = (PropertyCell)Kernel.getInstance().getGameMap().getPlayerPosition(subject);
         ownerBefore = land.getOwner();
@@ -29,6 +29,7 @@ public class LandCard extends AbstractCard {
         msg.setDescription(subject.getName()+"发动了土地卡，霸占了"+ land.getName()+"，维持5个回合");
         Kernel.getInstance().getMessagePipe().onMessageArrived(msg);
         this.leftTurn = 5;
+        return true;
     }
 
     @Override

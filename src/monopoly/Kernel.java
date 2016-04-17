@@ -133,7 +133,18 @@ public class Kernel {
     public CardFactory getCardFactory() {
         return cardFactory;
     }
-    public void issueCard(AbstractCard card, Player subject, Player object){
-        cardStack.issueCard(card, subject, object);
+
+    /**
+     * issue a card
+     * @param card the card to use
+     * @param subject the subject of the card
+     * @param object the object of the card
+     * @return true if success
+     */
+    public boolean issueCard(AbstractCard card, Player subject, Player object){
+        return cardStack.issueCard(card, subject, object);
+    }
+    public boolean hasBlockOnNextPosition(){
+        return gameMap.getPlayerPosition(players[currentPlayer]).getNextCell().hasRoadBlock();
     }
 }

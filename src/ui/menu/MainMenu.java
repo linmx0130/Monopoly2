@@ -52,6 +52,10 @@ public class MainMenu {
                     int step = random.nextInt(6)+1;
                     System.out.println(" 您投出了"+step+"！");
                     for (int i=1 ;i<step ;++i) {
+                        if (kernel.hasBlockOnNextPosition()) {
+                            System.out.println(":( 遇到路障，停止前进！");
+                            break;
+                        }
                         kernel.playerMove();
                     }
                     kernel.playerMoveEnd();
@@ -154,7 +158,8 @@ public class MainMenu {
             System.out.println("这张卡使用条件不满足，无法使用！");
             return ;
         }
-        player.getCards().remove(cardToUse);
-        Kernel.getInstance().issueCard(cardToUse, Kernel.getInstance().getCurrentPlayer(), object);
+        if (Kernel.getInstance().issueCard(cardToUse, Kernel.getInstance().getCurrentPlayer(), object)){
+            player.getCards().remove(cardToUse);
+        }
     }
 }

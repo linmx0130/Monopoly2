@@ -12,9 +12,10 @@ public class TurnOrientationCard extends AbstractCard {
     }
 
     @Override
-    public void useCard(Player subject, Player object) {
+    public boolean useCard(Player subject, Player object) {
         this.subject= subject;
         this.object = object;
+        return true;
     }
 
     @Override
