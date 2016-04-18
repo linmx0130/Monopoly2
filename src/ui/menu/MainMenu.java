@@ -27,6 +27,7 @@ public class MainMenu {
             System.out.println(" 0 - 查看地图");
             System.out.println(" 1 - 查看原始地图");
             System.out.println(" 2 - 使用道具");
+            System.out.println(" 3 - 前方10步内示警");
             System.out.println(" 4 - 查看前后指定步数的具体信息");
             System.out.println(" 5 - 查看所有玩家的资产信息");
             System.out.println(" 6 - 想看的都看了，心满意足地扔骰子前进！");
@@ -40,6 +41,9 @@ public class MainMenu {
                     break;
                 case 2:
                     showCardMenu();
+                    break;
+                case 3:
+                    roadBlockWarning();
                     break;
                 case 4:
                     showCellInformation();
@@ -162,6 +166,23 @@ public class MainMenu {
         }
         if (Kernel.getInstance().issueCard(cardToUse, Kernel.getInstance().getCurrentPlayer(), object)){
             player.getCards().remove(cardToUse);
+        }
+    }
+    private static void roadBlockWarning(){
+        ArrayList<String> warning = new ArrayList<>();
+        AbstractCell currentPos = Kernel.getInstance().getGameMap().getPlayerPosition(Kernel.getInstance().getCurrentPlayer());
+        int orientation = Kernel.getInstance().getCurrentPlayer().getOrientation();
+        for (int i=0;i<10;++i){
+            if (orientation > 0) currentPos = currentPos.getNextCell();
+            else currentPos = currentPos.getPreviousCell();
+            if (currentPos.hasRoadBlock()){
+                warning.add("前方"+i+"步处的"+currentPos.getName()+"有路障！");
+            }
+        }
+        if (warning.size() == 0){
+            System.out.println("前方10步内没有路障，请放心前行！");
+        }else{
+            warning.forEach(e->System.out.println(e));
         }
     }
 }

@@ -19,7 +19,7 @@ public class CardShopCell extends AbstractCell {
         super(id, "道具店", "可以使用点券购买道具的商店。");
         cardCouponMap = new HashMap<>();
         cardCouponMap.put("LandCard", 2);
-        cardCouponMap.put("TurnOrientation",1);
+        cardCouponMap.put("TurnOrientationCard",1);
         cardCouponMap.put("RoadBlockCard",1);
     }
     @Override
@@ -46,5 +46,10 @@ public class CardShopCell extends AbstractCell {
                 Kernel.getInstance().getMessagePipe().onMessageArrived(msg);
             }
         }while (choose !=null);
+    }
+
+    @Override
+    public void moveOverEffect(Player player) {
+        arrivedEffect(player);
     }
 }

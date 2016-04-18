@@ -1,4 +1,5 @@
 package monopoly;
+import monopoly.card.AbstractCard;
 import monopoly.cell.AbstractCell;
 import monopoly.cell.CellFactory;
 
@@ -93,5 +94,15 @@ public class GameMap {
 
     public AbstractCell getStartCell() {
         return startCell;
+    }
+
+    public int getDistanceBetweenCells(AbstractCell c1, AbstractCell c2){
+        int count = 0 ;
+        while (c1!= c2) c1= c1.getNextCell();
+        if (cellList.size() - count < count) count = cellList.size() -count;
+        return count;
+    }
+    public int getDistanceBetweenPlayers(Player p1, Player p2){
+        return getDistanceBetweenCells(playerPositions.get(p1), playerPositions.get(p2));
     }
 }

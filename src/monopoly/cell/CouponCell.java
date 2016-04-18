@@ -23,4 +23,9 @@ public class CouponCell extends AbstractCell {
         msg.setDescription(player.getName()+"获赠点券"+coupon+"点！");
         Kernel.getInstance().getMessagePipe().onMessageArrived(msg);
     }
+
+    @Override
+    public void moveOverEffect(Player player) {
+        arrivedEffect(player);
+    }
 }

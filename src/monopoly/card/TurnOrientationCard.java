@@ -1,5 +1,6 @@
 package monopoly.card;
 
+import monopoly.Kernel;
 import monopoly.Player;
 
 /**
@@ -15,6 +16,9 @@ public class TurnOrientationCard extends AbstractCard {
     public boolean useCard(Player subject, Player object) {
         this.subject= subject;
         this.object = object;
+        if (Kernel.getInstance().getGameMap().getDistanceBetweenPlayers(subject,object) >5) {
+            throw new RuntimeException("Error use TurnOrientationCard!");
+        }
         return true;
     }
 
@@ -35,6 +39,6 @@ public class TurnOrientationCard extends AbstractCard {
 
     @Override
     public boolean canBeUse(Player subject, Player object) {
-        return true;
+        return (Kernel.getInstance().getGameMap().getDistanceBetweenPlayers(subject,object) <= 5);
     }
 }

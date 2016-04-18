@@ -25,8 +25,9 @@ public class CardShopQuestionImpl extends CardShopQuestion {
             );
             cardNameTypeNameMap.put(card.getName(), e.getKey());
         });
+        System.out.println("您有点券"+getPlayer().getCoupon()+"点！以下是本店供应的道具卡。");
         for (int i=0;i<cardList.size();++i){
-            System.out.println((i+1)+"."+cardList.get(i).getFirst()+" "+cardList.get(i)+"点券");
+            System.out.println((i+1)+"."+cardList.get(i).getFirst()+" "+cardList.get(i).getSecond()+"点券");
         }
         System.out.println("请输入要购买的卡的编号，输入不在上述列表中则放弃。");
         int choose = Util.getIntFromScanner(new Scanner(System.in));
