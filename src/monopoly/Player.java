@@ -1,5 +1,6 @@
 package monopoly;
 
+import message.SuccessMessage;
 import monopoly.card.AbstractCard;
 import monopoly.cell.PropertyCell;
 
@@ -55,13 +56,45 @@ public class Player {
             this.money -= value;
             return true;
         }else{
+            value -= this.money;
+            this.money = 0;
             //get money from bank
             if (Kernel.getInstance().getBank().getDeposit(this)>=value){
                 Kernel.getInstance().getBank().modifyMoney(this, -value);
                 return true;
             }
-            //TODO
-            throw new RuntimeException("MONEY NOT ENOUGH");
+            value -= Kernel.getInstance().getBank().getDeposit(this);
+            Kernel.getInstance().getBank().modifyMoney(this , - Kernel.getInstance().getBank().getDeposit(this));
+            //sell properties
+            Object[] cells= this.getPropertyCells().stream().sorted((a,b) -> {
+                double diff = b.getBuyingPrice() - a.getBuyingPrice();
+                if (diff>0) return 1;
+                if (diff<0) return -1;
+                return 0;
+            }).toArray();
+            ArrayList<String> cellsSold = new ArrayList<>();
+            for (int i=0;i<cells.length;++i){
+                PropertyCell cell =(PropertyCell) cells[i];
+                this.money+=cell.getBuyingPrice();
+                this.getPropertyCells().remove(cell);
+                cell.setOwner(null);
+                cellsSold.add(cell.getName());
+                if (this.money >=value) break;
+            }
+            if (this.money < value) {
+                throw new RuntimeException("MONEY NOT ENOUGH");
+            }else{
+                this.money -= value;
+                SuccessMessage msg = (SuccessMessage) Kernel.getInstance().getMessageFactory().createMessage("SuccessMessage");
+                StringBuffer buffer = new StringBuffer("因为现金存款不足，出售了");
+                cellsSold.forEach(e -> buffer.append(e+"，"));
+                buffer.append("现在还剩现金");
+                buffer.append(this.money);
+                buffer.append("元");
+                msg.setDescription(buffer.toString());
+                Kernel.getInstance().getMessagePipe().onMessageArrived(msg);
+                return true;
+            }
         }
     }
     public void income(double value){
