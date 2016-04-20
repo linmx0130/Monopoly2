@@ -1,7 +1,9 @@
 package monopoly;
 
+import message.GameOverMessage;
 import message.MessageFactory;
 import message.MessagePipe;
+import message.SuccessMessage;
 import monopoly.card.AbstractCard;
 import monopoly.card.CardFactory;
 import monopoly.card.CardStack;
@@ -89,11 +91,17 @@ public class Kernel {
         return gameTurn;
     }
     public void nextPlayer(){
-        if (++currentPlayer == players.length) {
-            currentPlayer = 0;
-            gameTurn++;
-            cardStack.turnAction();
-        }
+        do {
+            ++currentPlayer;
+            if (currentPlayer == players.length) {
+                currentPlayer = 0;
+                gameTurn++;
+                turnAction();
+            }
+            if (!players[currentPlayer].isLost()){
+                return ;
+            }
+        }while (true);
     }
     public List<Player> getPlayers(){
         ArrayList<Player> ret = new ArrayList<>();
@@ -146,5 +154,21 @@ public class Kernel {
     }
     public boolean hasBlockOnNextPosition(){
         return gameMap.getPlayerPosition(players[currentPlayer]).getNextCell().hasRoadBlock();
+    }
+    public void forgiveGame(){
+        players[currentPlayer].setLost(true);
+        SuccessMessage msg = (SuccessMessage) getMessageFactory().createMessage("SuccessMessage");
+        msg.setDescription("玩家"+players[currentPlayer].getName()+"认输，放弃游戏！");
+        getMessagePipe().onMessageArrived(msg);
+    }
+    public void turnAction(){
+        //check the count of left players
+        if (Arrays.stream(players).filter(p-> !p.isLost()).count() == 1){
+            GameOverMessage msg = (GameOverMessage) getMessageFactory().createMessage("GameOverMessage");
+            msg.setWinner(Arrays.stream(players).filter(p-> !p.isLost()).findFirst().get());
+            getMessagePipe().onMessageArrived(msg);
+            return ;
+        }
+        cardStack.turnAction();
     }
 }

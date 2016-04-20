@@ -15,6 +15,7 @@ public class Player {
     private ArrayList<PropertyCell> propertyCells;
     private ArrayList<AbstractCard> cards;
     private String name;
+    private boolean isLost;
     int id;
     int orientation;
     int coupon;
@@ -24,6 +25,7 @@ public class Player {
         cards = new ArrayList<>();
         orientation = 1;
         coupon = 0;
+        isLost = false;
     }
     public double getMoney() {
         return money;
@@ -82,7 +84,11 @@ public class Player {
                 if (this.money >=value) break;
             }
             if (this.money < value) {
-                throw new RuntimeException("MONEY NOT ENOUGH");
+                setLost(true);
+                SuccessMessage msg = (SuccessMessage) Kernel.getInstance().getMessageFactory().createMessage("SuccessMessage");
+                msg.setDescription("玩家"+name+"因为资不抵债，破产离开游戏。");
+                Kernel.getInstance().getMessagePipe().onMessageArrived(msg);
+                return false;
             }else{
                 this.money -= value;
                 SuccessMessage msg = (SuccessMessage) Kernel.getInstance().getMessageFactory().createMessage("SuccessMessage");
@@ -141,5 +147,13 @@ public class Player {
 
     public void setCoupon(int coupon) {
         this.coupon = coupon;
+    }
+
+    public boolean isLost() {
+        return isLost;
+    }
+
+    public void setLost(boolean lost) {
+        isLost = lost;
     }
 }

@@ -19,7 +19,6 @@ public class MainMenu {
     public static void showMainMenu(Player player){
         Kernel kernel = Kernel.getInstance();
         MapViewer mapViewer=new MapViewer(kernel.getGameMap());
-        Player currentPlayer = kernel.getCurrentPlayer();
         boolean waiting = true;
         do {
             System.out.println("============");
@@ -31,6 +30,7 @@ public class MainMenu {
             System.out.println(" 4 - 查看前后指定步数的具体信息");
             System.out.println(" 5 - 查看所有玩家的资产信息");
             System.out.println(" 6 - 想看的都看了，心满意足地扔骰子前进！");
+            System.out.println(" 8 - 认输。。。");
             int choose = Util.getIntFromScanner(new Scanner(System.in));
             switch (choose){
                 case 0:
@@ -63,6 +63,11 @@ public class MainMenu {
                         kernel.playerMove();
                     }
                     kernel.playerMoveEnd();
+                    kernel.nextPlayer();
+                    waiting = false;
+                    break;
+                case 8:
+                    kernel.forgiveGame();
                     kernel.nextPlayer();
                     waiting = false;
                     break;
