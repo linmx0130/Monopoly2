@@ -1,0 +1,11 @@
+10
+1 Baidu 10 10.5
+2 Glegoo 30 29
+3 Sun 5.1 4.9
+4 Oracle 9.1 9.2
+5 MarcoHard 14 15
+6 SGI 18 17
+7 Netscape 13 12.4
+8 PenguinTencent 20 19.4
+9 Alimama 31 30
+10 NetHard 11 10.6

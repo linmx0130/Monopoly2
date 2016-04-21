@@ -8,7 +8,11 @@ import monopoly.card.AbstractCard;
 import monopoly.card.CardFactory;
 import monopoly.card.CardStack;
 import monopoly.cell.AbstractCell;
+import monopoly.stock.StockMarket;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +31,7 @@ public class Kernel {
     private CardFactory cardFactory;
     private CardStack cardStack;
     private Integer nextDiceValue;
+    private StockMarket stockMarket;
     private Kernel(int userCount){
         gameMap=new GameMap();
         if (userCount>4){
@@ -40,6 +45,14 @@ public class Kernel {
         bank = new Bank(userCount);
         cardFactory= new CardFactory();
         cardStack = new CardStack();
+        stockMarket = new StockMarket();
+        try {
+            FileInputStream is = new FileInputStream("stock_init.txt");
+            stockMarket.loadInitFromStream(is);
+            is.close();
+        } catch (IOException e) {
+            throw new RuntimeException("Error while loading stocks...");
+        }
     }
     private static Kernel instance;
     public static void createInstance(int userCount){
@@ -171,6 +184,7 @@ public class Kernel {
             return ;
         }
         cardStack.turnAction();
+        stockMarket.randomFloat();
     }
 
     public Integer getNextDiceValue() {
@@ -179,5 +193,9 @@ public class Kernel {
 
     public void setNextDiceValue(Integer nextDiceValue) {
         this.nextDiceValue = nextDiceValue;
+    }
+
+    public StockMarket getStockMarket() {
+        return stockMarket;
     }
 }

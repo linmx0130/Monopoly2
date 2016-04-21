@@ -30,6 +30,7 @@ public class MainMenu {
             System.out.println(" 4 - 查看前后指定步数的具体信息");
             System.out.println(" 5 - 查看所有玩家的资产信息");
             System.out.println(" 6 - 想看的都看了，心满意足地扔骰子前进！");
+            System.out.println(" 7 - 进入股市投资赚钱！");
             System.out.println(" 8 - 认输。。。");
             int choose = Util.getIntFromScanner(new Scanner(System.in));
             switch (choose){
@@ -69,6 +70,9 @@ public class MainMenu {
                     kernel.playerMoveEnd();
                     kernel.nextPlayer();
                     waiting = false;
+                    break;
+                case 7:
+                    StockMenu.show();
                     break;
                 case 8:
                     kernel.forgiveGame();
