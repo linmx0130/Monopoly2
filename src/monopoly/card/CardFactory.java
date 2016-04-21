@@ -20,6 +20,7 @@ public class CardFactory {
         addCard("RoadBlockCard", RoadBlockCard.class, 1);
         addCard("RobCard",RobCard.class,1);
         addCard("TaxCard",TaxCard.class,1);
+        addCard("DiceControllerCard", DiceControllerCard.class,1);
     }
     public void addCard(String typeName, Class cardType, double rate){
         cardTypeList.add(typeName);

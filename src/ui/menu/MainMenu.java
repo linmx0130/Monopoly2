@@ -54,6 +54,10 @@ public class MainMenu {
                 case 6:
                     Random random=new Random();
                     int step = random.nextInt(6)+1;
+                    if (Kernel.getInstance().getNextDiceValue()!= null){
+                        step = Kernel.getInstance().getNextDiceValue();
+                        Kernel.getInstance().setNextDiceValue(null);
+                    }
                     System.out.println(" 您投出了"+step+"！");
                     for (int i=1 ;i<step ;++i) {
                         if (kernel.hasBlockOnNextPosition()) {

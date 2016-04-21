@@ -23,6 +23,7 @@ public class CardShopCell extends AbstractCell {
         cardCouponMap.put("RoadBlockCard",1);
         cardCouponMap.put("RobCard",1);
         cardCouponMap.put("TaxCard",1);
+        cardCouponMap.put("DiceControllerCard",1);
     }
     @Override
     public void arrivedEffect(Player player) {

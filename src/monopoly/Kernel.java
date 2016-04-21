@@ -26,6 +26,7 @@ public class Kernel {
     private Bank bank;
     private CardFactory cardFactory;
     private CardStack cardStack;
+    private Integer nextDiceValue;
     private Kernel(int userCount){
         gameMap=new GameMap();
         if (userCount>4){
@@ -170,5 +171,13 @@ public class Kernel {
             return ;
         }
         cardStack.turnAction();
+    }
+
+    public Integer getNextDiceValue() {
+        return nextDiceValue;
+    }
+
+    public void setNextDiceValue(Integer nextDiceValue) {
+        this.nextDiceValue = nextDiceValue;
     }
 }
