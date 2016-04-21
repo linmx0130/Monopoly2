@@ -1,6 +1,7 @@
 package ui.menu;
 
 import monopoly.Kernel;
+import monopoly.Player;
 import monopoly.stock.Stock;
 import monopoly.stock.StockMarket;
 import ui.Util;
@@ -8,6 +9,8 @@ import ui.Util;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -29,6 +32,57 @@ public class StockMenu {
         }
         Util.printTable(buffer);
     }
+    private static void sellStockMenu(StockMarket market, String buf){
+        String[] dataBuf = buf.split(" ");
+        if (dataBuf.length!=3){
+            System.out.println("输入错误，请重新输入");
+            return ;
+        }
+        int stockId, amount;
+        try {
+            stockId = Integer.valueOf(dataBuf[1]);
+            amount = Integer.valueOf(dataBuf[2]);
+        } catch (NumberFormatException e){
+            System.out.println("输入错误，请重新输入");
+            return;
+        }
+        market.sellStock(Kernel.getInstance().getCurrentPlayer(), stockId, amount);
+    }
+    private static void buyStockMenu(StockMarket market, String buf){
+        String[] dataBuf = buf.split(" ");
+        if (dataBuf.length!=3){
+            System.out.println("输入错误，请重新输入");
+            return ;
+        }
+        int stockId, amount;
+        try {
+            stockId = Integer.valueOf(dataBuf[1]);
+            amount = Integer.valueOf(dataBuf[2]);
+        } catch (NumberFormatException e){
+            System.out.println("输入错误，请重新输入");
+            return;
+        }
+        market.buyStock(Kernel.getInstance().getCurrentPlayer(), stockId, amount);
+    }
+    private static void showStockHold(StockMarket market){
+        Player player = Kernel.getInstance().getCurrentPlayer();
+        HashMap<Stock, Integer> stockHold = market.getStockHold(player);
+        String [][] buf = new String[stockHold.size()+1][4];
+        buf[0][0]="序号";
+        buf[0][1]="股票名";
+        buf[0][2]="每股价格";
+        buf[0][3]="持股量";
+        ArrayList<Stock> stockList =new ArrayList<>();
+        stockHold.keySet().stream().sorted((s1, s2) ->s2.getId()-s1.getId()).forEach(stock -> stockList.add(stock));
+        for (int i=0;i<stockList.size();++i){
+            Stock stock = stockList.get(i);
+            buf[i+1][0]=String.valueOf(stock.getId());
+            buf[i+1][1]=stock.getName();
+            buf[i+1][2]=String.format("%.2f",stock.getPrice());
+            buf[i+1][3]=String.valueOf(stockHold.get(stock));
+        }
+        Util.printTable(buf);
+    }
     public static void show(){
         StockMarket market = Kernel.getInstance().getStockMarket();
         boolean flag = true;
@@ -37,7 +91,9 @@ public class StockMenu {
             showStocks(market);
             System.out.println("b x n  -> 购买x号股n份");
             System.out.println("s x n  -> 售出x号股n份");
+            System.out.println("l      -> 查看持股情况");
             System.out.println("q      -> 退出股票市场");
+            System.out.print(">> ");
             String buf;
             try {
                 buf = cin.readLine();
@@ -49,10 +105,13 @@ public class StockMenu {
             }
             buf= buf.trim();
             if (buf.equals("q")) flag = false;
-            else if (buf.startsWith("b")){
-                //TODO: buy
-            } else if (buf.startsWith("s")){
-                //TODO: sell
+            else if (buf.equals("l")) {
+                showStockHold(market);
+            }
+            else if (buf.startsWith("b")) {
+                buyStockMenu(market, buf);
+            }else if (buf.startsWith("s")){
+                sellStockMenu(market, buf);
             }else{
                 System.out.println("输入错误，请重新输入");
             }

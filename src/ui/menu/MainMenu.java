@@ -85,17 +85,18 @@ public class MainMenu {
     }
     private static void showPlayerPropertyInformation(){
         ArrayList<String[]> buffer = new ArrayList<>();
-        String [] title= new String[7];
+        String [] title= new String[8];
         title[0]="玩家名";
         title[1]="现金";
         title[2]="存款";
         title[3]="点券";
         title[4]="房产数量";
         title[5]="房产总额";
-        title[6]="资产总额";
+        title[6]="股票总额";
+        title[7]="资产总额";
         buffer.add(title);
         Kernel.getInstance().getPlayers().stream().forEach(e->{
-            String [] row =new String [7];
+            String [] row =new String [8];
             row[0] = e.getName();
             double money = e.getMoney();
             row[1] = String.valueOf(money);
@@ -104,8 +105,10 @@ public class MainMenu {
             row[3] = String.valueOf(e.getCoupon());
             row[4] = String.valueOf(e.getPropertyCells().size());
             double propertyValue = e.getPropertyCells().stream().map(cell->cell.getBuyingPrice()).reduce(0.0, (a,b)->a+b);
-            row[5]= String.valueOf(propertyValue);
-            row[6]= String.valueOf(money+deposit+propertyValue);
+            row[5]= String.format("%.2f",propertyValue);
+            double stockValue = Kernel.getInstance().getStockMarket().getTotalHold(e);
+            row[6]= String.format("%.2f",stockValue);
+            row[7]= String.format("%.2f",money+deposit+propertyValue+stockValue);
             buffer.add(row);
         });
         String [][] outer= new String[buffer.size()][];
