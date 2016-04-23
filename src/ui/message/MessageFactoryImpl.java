@@ -24,6 +24,8 @@ public class MessageFactoryImpl implements MessageFactory {
         registerMessageType("CardShopQuestion", CardShopQuestionImpl.class);
         registerMessageType("GameOverMessage",GameOverMessageImpl.class);
         registerMessageType("DiceControllerQuestion", DiceControllerQuestionImpl.class);
+        registerMessageType("LotteryQuestion", LotteryQuestionImpl.class);
+        registerMessageType("LotteryAlertMessage", LotteryAlertMessageImpl.class);
     }
 
     public void registerMessageType(String typename, Class typeClass) {

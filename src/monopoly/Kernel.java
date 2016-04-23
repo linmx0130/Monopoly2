@@ -32,6 +32,7 @@ public class Kernel {
     private CardStack cardStack;
     private Integer nextDiceValue;
     private StockMarket stockMarket;
+    private LotterySystem lottery;
     private Kernel(int userCount){
         gameMap=new GameMap();
         if (userCount>4){
@@ -46,6 +47,7 @@ public class Kernel {
         cardFactory= new CardFactory();
         cardStack = new CardStack();
         stockMarket = new StockMarket();
+        lottery = new LotterySystem();
         try {
             FileInputStream is = new FileInputStream("stock_init.txt");
             stockMarket.loadInitFromStream(is);
@@ -197,5 +199,13 @@ public class Kernel {
 
     public StockMarket getStockMarket() {
         return stockMarket;
+    }
+
+    public LotterySystem getLottery() {
+        return lottery;
+    }
+
+    public void setLottery(LotterySystem lottery) {
+        this.lottery = lottery;
     }
 }
