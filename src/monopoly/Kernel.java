@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Mengxiao Lin on 2016/4/11.
@@ -26,13 +27,23 @@ public class Kernel {
     private MessageFactory[] messageFactories;
     private Player[] players;
     private int currentPlayer;
-    private int gameTurn;
+    //private int gameTurn;
+    private Date currentDate;
     private Bank bank;
     private CardFactory cardFactory;
     private CardStack cardStack;
     private Integer nextDiceValue;
     private StockMarket stockMarket;
     private LotterySystem lottery;
+
+    public Date getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(Date currentDate) {
+        this.currentDate = currentDate;
+    }
+
     private Kernel(int userCount){
         gameMap=new GameMap();
         if (userCount>4){
@@ -42,7 +53,6 @@ public class Kernel {
         messageFactories= new MessageFactory[userCount];
         players = new Player[userCount];
         currentPlayer = 0;
-        gameTurn = 0;
         bank = new Bank(userCount);
         cardFactory= new CardFactory();
         cardStack = new CardStack();
@@ -103,15 +113,23 @@ public class Kernel {
     public Player getCurrentPlayer(){
         return players[currentPlayer];
     }
-    public int getGameTurn(){
-        return gameTurn;
+    private void monthAction(){
+        Arrays.stream(players).forEach(player ->
+            bank.modifyMoney(player,bank.getDeposit(player))
+        );
+        int lotteryValue = (new Random()).nextInt(10)+1;
+        lottery.drawLottery(lotteryValue);
     }
     public void nextPlayer(){
         do {
             ++currentPlayer;
             if (currentPlayer == players.length) {
                 currentPlayer = 0;
-                gameTurn++;
+                int lastMonth = currentDate.getMonth();
+                currentDate.toNextDay();
+                if (lastMonth != currentDate.getMonth()){
+                    monthAction();
+                }
                 turnAction();
             }
             if (!players[currentPlayer].isLost()){
@@ -203,9 +221,5 @@ public class Kernel {
 
     public LotterySystem getLottery() {
         return lottery;
-    }
-
-    public void setLottery(LotterySystem lottery) {
-        this.lottery = lottery;
     }
 }

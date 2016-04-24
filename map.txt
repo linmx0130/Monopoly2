@@ -7,7 +7,7 @@
 6 PropertyCell 0 5 本部球场 1000
 7 CardCell 0 6
 8 CouponCell 0 7
-9 CouponCell 0 8
+9 LotteryCell 0 8
 10 CardShopCell 0 9
 11 PropertyCell 1 9 叶耀珍楼 1500
 12 PropertyCell 2 9 李达三楼 1500

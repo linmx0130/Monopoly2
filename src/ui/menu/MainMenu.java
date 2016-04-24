@@ -22,7 +22,7 @@ public class MainMenu {
         boolean waiting = true;
         do {
             System.out.println("============");
-            System.out.println("玩家 " + player.getName() +" ，现在是第" + kernel.getGameTurn() + "回合，请问你要做什么？");
+            System.out.println("玩家 " + player.getName() +" ，现在是第" + kernel.getCurrentDate() + "，请问你要做什么？");
             System.out.println(" 0 - 查看地图");
             System.out.println(" 1 - 查看原始地图");
             System.out.println(" 2 - 使用道具");

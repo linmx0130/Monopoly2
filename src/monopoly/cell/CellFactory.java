@@ -26,6 +26,8 @@ public class CellFactory {
                 return new CouponCell(id);
             case "CardShopCell":
                 return new CardShopCell(id);
+            case "LotteryCell":
+                return new LotteryCell(id);
             default:
 
         }

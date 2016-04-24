@@ -21,4 +21,9 @@ public class LotteryCell extends AbstractCell{
         double value = question.getValue();
         Kernel.getInstance().getLottery().buyLottery(player, choose, value);
     }
+
+    @Override
+    public void moveOverEffect(Player player) {
+        arrivedEffect(player);
+    }
 }
