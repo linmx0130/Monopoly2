@@ -1,31 +1,40 @@
-5 10 26 1
+8 10 36 1
 1 EmptyCell 0 0
 2 BankCell 0 1
-3 PropertyCell 0 2 光华楼 2000
-4 PropertyCell 0 3 旦苑食堂 1500
-5 PropertyCell 0 4 本部宿舍 2000
-6 PropertyCell 0 5 本部球场 1000
-7 CardCell 0 6
-8 CouponCell 0 7
-9 LotteryCell 0 8
-10 CardShopCell 0 9
-11 PropertyCell 1 9 叶耀珍楼 1500
-12 PropertyCell 2 9 李达三楼 1500
-13 PropertyCell 3 9 管院菜地 1000
-14 PropertyCell 4 9 文科图书馆 1200
-15 NewsCell 4 8
-16 PropertyCell 4 7 正大体育馆 2000
-17 PropertyCell 4 6 鹿鸣书店 2000
-18 PropertyCell 4 5 经世书局 1000
-19 PropertyCell 4 4 南娱 1000
-20 CardCell 4 3
-21 PropertyCell 4 2 理科图书馆 1200
-22 PropertyCell 4 1 日本研究中心 1000
-23 PropertyCell 4 0 相辉堂 1500
-24 PropertyCell 3 0 北区商业街 1400
-25 NewsCell 2 0
-26 CardShopCell 1 0
-
+3 PropertyCell 0 2 光华楼 1 2000
+4 PropertyCell 1 2 旦苑食堂 1 1500
+5 PropertyCell 2 2 本部宿舍  1 2000
+6 PropertyCell 2 3 本部球场 1 1000
+7 CardCell 2 4
+8 CouponCell 2 5
+9 LotteryCell 1 5
+10 CardShopCell 0 5
+11 PropertyCell 0 6 叶耀珍楼 2 1500
+12 PropertyCell 0 7 李达三楼 2 1500
+13 PropertyCell 0 8 管院菜地 2 1000
+14 PropertyCell 0 9 文科图书馆 2 1200
+15 NewsCell 1 9
+16 PropertyCell 2 9 正大体育馆 3 2000
+17 PropertyCell 3 9 鹿鸣书店 3 2000
+18 PropertyCell 4 9 经世书局 3 1000
+19 PropertyCell 5 9 南娱 3 1000
+20 CardCell 6 9
+21 PropertyCell 7 9 理科图书馆 3 1200
+22 PropertyCell 7 8 日本研究中心 3 1000
+23 PropertyCell 7 7 相辉堂 3 1500
+24 PropertyCell 7 6 北区商业街 3 1400
+25 NewsCell 7 5
+26 CardShopCell 7 4
+27 PropertyCell 7 3 老逸夫楼 4 1500
+28 PropertyCell 7 2 新逸夫楼 4 1500
+29 PropertyCell 7 1 子彬院 4 3000
+30 PropertyCell 7 0 档案馆 4 1500
+31 NewsCell 6 0
+32 BankCell 0 1
+33 PropertyCell 4 0 物理楼 5 2000
+34 PropertyCell 3 0 毛像 5 1500
+35 PropertyCell 2 0 文科楼 5 2400
+36 PropertyCell 1 0 化学楼 5 2000
 1 2
 2 3
 3 4
@@ -51,4 +60,14 @@
 23 24
 24 25
 25 26
-26 1
+26 27
+27 28
+28 29
+29 30
+30 31
+31 32
+32 33
+33 34
+34 35
+35 36
+36 1

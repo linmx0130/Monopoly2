@@ -15,8 +15,9 @@ public class CellFactory {
             case "PropertyCell":
                 {
                     String name = reader.next();
+                    int streetNumber = reader.nextInt();
                     double basePrice = reader.nextDouble();
-                    return new PropertyCell(id,name,name,basePrice);
+                    return new PropertyCell(id,name,name,basePrice,streetNumber);
                 }
             case "CardCell":
                 return new CardCell(id);

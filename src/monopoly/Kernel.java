@@ -11,7 +11,6 @@ import monopoly.cell.AbstractCell;
 import monopoly.stock.StockMarket;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -164,7 +163,7 @@ public class Kernel {
     public void initPlayers(){
         Arrays.stream(players).forEach(e -> {
             gameMap.setPlayerToCell(e, gameMap.getStartCell());
-            e.setMoney(10000);
+            e.setMoney(15000);
         });
     }
 
@@ -189,8 +188,9 @@ public class Kernel {
     public boolean hasBlockOnNextPosition(){
         return gameMap.getPlayerPosition(players[currentPlayer]).getNextCell().hasRoadBlock();
     }
-    public void forgiveGame(){
+    public void giveUpGame(){
         players[currentPlayer].setLost(true);
+        players[currentPlayer].getPropertyCells().stream().forEach(cell -> cell.setOwner(null));
         SuccessMessage msg = (SuccessMessage) getMessageFactory().createMessage("SuccessMessage");
         msg.setDescription("玩家"+players[currentPlayer].getName()+"认输，放弃游戏！");
         getMessagePipe().onMessageArrived(msg);

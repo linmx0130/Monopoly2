@@ -75,7 +75,7 @@ public class MainMenu {
                     StockMenu.show();
                     break;
                 case 8:
-                    kernel.forgiveGame();
+                    kernel.giveUpGame();
                     kernel.nextPlayer();
                     waiting = false;
                     break;

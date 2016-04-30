@@ -18,12 +18,14 @@ public class PropertyCell extends AbstractCell{
     private final static int LEVEL_BOUND = 6;
     private double basePrice;
     private int level;
+    private int streetNumber;
     private Player owner;
-    public PropertyCell(int id, String name, String description, double basePrice){
+    public PropertyCell(int id, String name, String description, double basePrice, int streetNumber){
         super(id, name,description);
         this.basePrice = basePrice;
         this.level = 1;
         this.owner = null;
+        this.streetNumber = streetNumber;
     }
     private void askLevelUp() {
         YesOrNoQuestion question = (YesOrNoQuestion) Kernel.getInstance().getMessageFactory().createMessage("YesOrNoQuestion");
@@ -104,8 +106,17 @@ public class PropertyCell extends AbstractCell{
     public int getLevel() {
         return level;
     }
+    private boolean isOwnerGotWholeStreet(){
+        if (owner == null) return false;
+        return Kernel.getInstance().getGameMap().getCellList().stream().filter( c -> c instanceof PropertyCell)
+                .filter(c -> ((PropertyCell)c).streetNumber == this.streetNumber)
+                .filter(c -> ((PropertyCell)c).owner != this.owner)
+                .count() ==0;
+    }
     public double getPassingCost(){
-        return getBuyingPrice() *0.2;
+        double rate = 0.2;
+        if (isOwnerGotWholeStreet()) rate = 0.3;
+        return getBuyingPrice() * rate;
     }
 
     public void levelUp(){
@@ -120,11 +131,16 @@ public class PropertyCell extends AbstractCell{
         this.owner = owner;
     }
 
+    public int getStreetNumber() {
+        return streetNumber;
+    }
+
     @Override
     public List<Pair<String, String>> getCellInformation() {
         List<Pair<String, String>> ret = new ArrayList<>();
         ret.add(new Pair<>("类型","Property"));
         ret.add(new Pair<>("名称", getName()));
+        ret.add(new Pair<>("街道", Integer.toString(getStreetNumber())));
         ret.add(new Pair<>("描述", getDescription()));
         ret.add(new Pair<>("初始价格", Double.toString(getBasePrice())));
         ret.add(new Pair<>("当前等级", Integer.toString(getLevel())+"级"));
