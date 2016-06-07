@@ -22,4 +22,8 @@ public class CardCell extends AbstractCell {
         Kernel.getInstance().getMessagePipe().onMessageArrived(msg);
     }
 
+    @Override
+    public void moveOverEffect(Player player) {
+        arrivedEffect(player);
+    }
 }
