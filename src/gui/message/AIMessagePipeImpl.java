@@ -4,11 +4,12 @@ import message.Message;
 import message.MessagePipe;
 
 /**
- * Created by Mengxiao Lin on 2016/6/8.
+ * Message Pipe for AI
+ * Created by Mengxiao Lin on 2016/6/9.
  */
-public class MessagePipeImpl implements MessagePipe {
+public class AIMessagePipeImpl implements MessagePipe {
     @Override
     public void onMessageArrived(Message message) {
-        //TODO: sync&async message pipe
+
     }
 }

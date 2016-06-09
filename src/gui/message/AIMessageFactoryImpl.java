@@ -4,12 +4,12 @@ import message.Message;
 import message.MessageFactory;
 
 /**
- * Created by Mengxiao Lin on 2016/6/8.
+ * Message Factory for AI
+ * Created by Mengxiao Lin on 2016/6/9.
  */
-public class MessageFactoryImpl implements MessageFactory{
+public class AIMessageFactoryImpl implements MessageFactory {
     @Override
     public Message createMessage(String messageType) {
-        //TODO add message to the factory
         return null;
     }
 }

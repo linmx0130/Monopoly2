@@ -1,8 +1,12 @@
 package gui;
 
+import gui.message.*;
+import message.MessageFactory;
+import message.MessagePipe;
 import monopoly.Date;
 import monopoly.Kernel;
 import monopoly.Pair;
+import monopoly.Player;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -18,12 +22,28 @@ import java.util.Calendar;
  * Created by Mengxiao Lin on 2016/6/7.
  */
 public class GameSetupFrame extends JFrame {
+    class PlayerNameAdapter{
+        String name;
+        boolean isAI;
+
+        public PlayerNameAdapter(String name, boolean isAI) {
+            this.name = name;
+            this.isAI = isAI;
+        }
+
+        @Override
+        public String toString() {
+            if (isAI) return name+"(AI)";
+            return name;
+        }
+    }
     private JSpinner startDateSpinner;
     private JComboBox<String> mapComboBox;
-    private JList<String> playerList;
-    private DefaultListModel<String> playerListModel;
+    private JList<PlayerNameAdapter> playerList;
+    private DefaultListModel<PlayerNameAdapter> playerListModel;
     private JTextField newPlayerNameTextField;
     private JFrame parentFrame;
+    private JCheckBox isAICheckBox;
     private ArrayList<Pair<String, String>> mapList;
 
     private void closeAndReturnWelcome() {
@@ -45,8 +65,22 @@ public class GameSetupFrame extends JFrame {
         //load map
         String mapFilename = mapList.get(mapComboBox.getSelectedIndex()).getSecond();
         kernel.getGameMap().loadMapFromStream(getClass().getResourceAsStream("/map/"+mapFilename));
-        //TODO add message pipe and message factory for each user.
-
+        //add player
+        for (int i=0;i<playerListModel.size();++i){
+            PlayerNameAdapter adapter = playerListModel.get(i);
+            Player player = new Player(adapter.name);
+            player.setId(i+1);
+            MessagePipe messagePipe;
+            MessageFactory messageFactory;
+            if (adapter.isAI){
+                messagePipe = new AIMessagePipeImpl();
+                messageFactory = new AIMessageFactoryImpl();
+            }else{
+                messagePipe = new HumanMessagePipeImpl();
+                messageFactory = new HumanMessageFactoryImpl();
+            }
+            Kernel.getInstance().addPlayer(player, messageFactory, new PlayerMessagePipeImpl(messagePipe));
+        }
     }
 
     private ArrayList<Pair<String,String>> loadMapList(){
@@ -82,6 +116,8 @@ public class GameSetupFrame extends JFrame {
         startGameBtn = new JButton("开始游戏");
         startGameBtn.addActionListener(e->{
             setUpKernel();
+            GameFrame f = new GameFrame();
+            f.setVisible(true);
         });
         btnPanel.add(cancelBtn);
         btnPanel.add(startGameBtn);
@@ -123,13 +159,21 @@ public class GameSetupFrame extends JFrame {
         newPlayerPanel.add(new JLabel("玩家名字："), BorderLayout.WEST);
         newPlayerNameTextField = new JTextField();
         newPlayerPanel.add(newPlayerNameTextField);
+        JPanel newPlayerBtnPanel = new JPanel(new BorderLayout());
         JButton addPlayerBtn = new JButton("添加玩家");
-        newPlayerPanel.add(addPlayerBtn, BorderLayout.EAST);
+        isAICheckBox = new JCheckBox("AI玩家");
+        newPlayerBtnPanel.add(isAICheckBox,BorderLayout.WEST);
+        newPlayerBtnPanel.add(addPlayerBtn,BorderLayout.CENTER);
+        newPlayerPanel.add(newPlayerBtnPanel, BorderLayout.EAST);
         ret.add(newPlayerPanel, BorderLayout.NORTH);
 
         addPlayerBtn.addActionListener(e -> {
-            playerListModel.addElement(newPlayerNameTextField.getText());
+            PlayerNameAdapter adapter = new PlayerNameAdapter(
+                    newPlayerNameTextField.getText(),
+                    isAICheckBox.isSelected());
+            playerListModel.addElement(adapter);
             newPlayerNameTextField.setText("");
+            isAICheckBox.setSelected(false);
         });
 
         JPopupMenu listPopupMenu = new JPopupMenu();
@@ -146,7 +190,7 @@ public class GameSetupFrame extends JFrame {
             int selectedIndex = playerList.getSelectedIndex();
             if (selectedIndex == 0) return;
             int targetIndex = selectedIndex - 1;
-            String itemToMove = playerListModel.get(selectedIndex);
+            PlayerNameAdapter itemToMove = playerListModel.get(selectedIndex);
             playerListModel.remove(selectedIndex);
             playerListModel.add(targetIndex, itemToMove);
         });
@@ -155,7 +199,7 @@ public class GameSetupFrame extends JFrame {
             int selectedIndex = playerList.getSelectedIndex();
             if (selectedIndex == playerListModel.size() - 1) return;
             int targetIndex = selectedIndex + 1;
-            String itemToMove = playerListModel.get(selectedIndex);
+            PlayerNameAdapter itemToMove = playerListModel.get(selectedIndex);
             playerListModel.remove(selectedIndex);
             playerListModel.add(targetIndex, itemToMove);
         });
