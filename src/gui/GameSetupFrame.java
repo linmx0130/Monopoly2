@@ -81,6 +81,7 @@ public class GameSetupFrame extends JFrame {
             }
             Kernel.getInstance().addPlayer(player, messageFactory, new PlayerMessagePipeImpl(messagePipe));
         }
+        Kernel.getInstance().initPlayers();
     }
 
     private ArrayList<Pair<String,String>> loadMapList(){

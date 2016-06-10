@@ -2,6 +2,7 @@ package gui.map;
 
 import monopoly.GameMap;
 import monopoly.Kernel;
+import monopoly.Player;
 import monopoly.cell.AbstractCell;
 
 import javax.swing.*;
@@ -20,10 +21,20 @@ public class MapViewer extends JPanel {
     private int paddingRight = 10;
     public ArrayList<CellClickedListener> cellClickedListenerList;
     private GameMap gameMap;
+    private ArrayList<ImageIcon> playersIconList;
+    private final int PLAYER_OFFSET[][] = {{0,0},{0,1},{1,0},{1,1}};
+    private void loadPlayersIcon(){
+        playersIconList = new ArrayList<>();
+        playersIconList.add(new ImageIcon(getClass().getResource("/image/chess_blue.png")));
+        playersIconList.add(new ImageIcon(getClass().getResource("/image/chess_red.png")));
+        playersIconList.add(new ImageIcon(getClass().getResource("/image/chess_green.png")));
+        playersIconList.add(new ImageIcon(getClass().getResource("/image/chess_magenta.png")));
+    }
     public MapViewer() {
         setPreferredSize(new Dimension(500, 500));
         gameMap = Kernel.getInstance().getGameMap();
         cellClickedListenerList = new ArrayList<>();
+        loadPlayersIcon();
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -61,6 +72,7 @@ public class MapViewer extends JPanel {
         Image ret = createImage(imageWidth, imageHeight);
         Graphics2D g = (Graphics2D) ret.getGraphics();
         g.setColor(Color.GREEN);
+        //draw cells
         for (AbstractCell cell : gameMap.getCellList()) {
             int cellRealX = getCellRealX(cell);
             int cellRealY = getCellRealY(cell);
@@ -70,6 +82,15 @@ public class MapViewer extends JPanel {
             }else{
                 g.drawImage(cellMapAdapter.getImage(), cellRealX,cellRealY, cellWidth,cellHeight,null);
             }
+        }
+        //draw players
+        for (Player player : Kernel.getInstance().getPlayers()){
+            AbstractCell currentCell = gameMap.getPlayerPosition(player);
+            int iconWidth = cellWidth/2, iconHeight = cellHeight/2;
+            int targetX = getCellRealX(currentCell)+PLAYER_OFFSET[player.getId()-1][0] * (iconWidth+2);
+            int targetY = getCellRealY(currentCell)+PLAYER_OFFSET[player.getId()-1][1] * (iconHeight+2);
+
+            g.drawImage(playersIconList.get(player.getId()-1).getImage(), targetX,targetY,iconWidth, iconHeight,null);
         }
         return ret;
     }

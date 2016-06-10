@@ -1,5 +1,6 @@
 package gui.map;
 
+import gui.Constant;
 import monopoly.cell.AbstractCell;
 import monopoly.cell.PropertyCell;
 
@@ -31,7 +32,11 @@ public class PropertyCellAdapter extends CellMapAdapter {
         Image ret = viewer.createImage(128,128);
         Graphics2D g = (Graphics2D)ret.getGraphics();
         g.setStroke(new BasicStroke(5));
-        g.setColor(Color.ORANGE);
+        if (cell.getOwner() == null) {
+            g.setColor(Color.ORANGE);
+        }else {
+            g.setColor(Constant.PLAYER_COLOR[cell.getOwner().getId()-1]);
+        }
         g.drawRect(4,4,120,120);
         int targetIconId = Math.min(iconList.size(), cell.getLevel())-1;
         g.drawImage(iconList.get(targetIconId).getImage(),8,8,112,112,null);

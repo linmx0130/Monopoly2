@@ -9,7 +9,7 @@ import monopoly.Player;
  */
 public class BankCell extends AbstractCell{
     public BankCell(int id){
-        super(id, "Bank", "Bank");
+        super(id, "银行", "闷声发财的人存钱的地方。");
     }
     @Override
     public void arrivedEffect(Player player) {
