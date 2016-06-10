@@ -6,6 +6,9 @@ import monopoly.cell.AbstractCell;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 /**
  * Created by Mengxiao Lin on 2016/6/8.
@@ -15,24 +18,52 @@ public class MapViewer extends JPanel {
     private int paddingDown = 10;
     private int paddingLeft = 10;
     private int paddingRight = 10;
-
+    public ArrayList<CellClickedListener> cellClickedListenerList;
+    private GameMap gameMap;
     public MapViewer() {
         setPreferredSize(new Dimension(500, 500));
+        gameMap = Kernel.getInstance().getGameMap();
+        cellClickedListenerList = new ArrayList<>();
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                final int clickedX = e.getX(), clickedY = e.getY();
+                final int cellWidth = getCellWidth(), cellHeight = getCellHeight();
+                gameMap.getCellList().forEach(cell->{
+                    final int cellX = getCellRealX(cell), cellY = getCellRealY(cell);
+                    final int cellX2 = cellX+ cellWidth, cellY2 = cellY+cellHeight;
+                    if (clickedX>=cellX && clickedX< cellX2 && clickedY >=cellY && clickedY <cellY2){
+                        cellClickedListenerList.forEach(listener -> {listener.cellClickedAction(cell);});
+                    }
+                });
+            }
+        });
+    }
+    private int getCellWidth(){
+        return (getWidth() - paddingLeft - paddingRight) / gameMap.getWidth();
+    }
+    private int getCellHeight(){
+        return (getHeight() - paddingUp - paddingDown) / gameMap.getHeight();
+    }
+    private int getCellRealX(AbstractCell cell){
+        return cell.getY() * getCellWidth() + paddingLeft;
+    }
+    private int getCellRealY(AbstractCell cell){
+        return cell.getX() * getCellHeight() + paddingUp;
     }
 
     private Image getImageOfMap() {
         int imageWidth = getWidth(),
             imageHeight = getHeight();
-        GameMap gameMap = Kernel.getInstance().getGameMap();
         // the direction of map is different to that of the image!
-        int cellWidth = (imageWidth - paddingLeft - paddingRight) / gameMap.getWidth();
-        int cellHeight = (imageHeight - paddingUp - paddingDown) / gameMap.getHeight();
+        int cellWidth = getCellWidth();
+        int cellHeight = getCellHeight();
         Image ret = createImage(imageWidth, imageHeight);
         Graphics2D g = (Graphics2D) ret.getGraphics();
         g.setColor(Color.GREEN);
         for (AbstractCell cell : gameMap.getCellList()) {
-            int cellRealX = cell.getY() * cellWidth + paddingLeft;
-            int cellRealY = cell.getX() * cellHeight + paddingUp;
+            int cellRealX = getCellRealX(cell);
+            int cellRealY = getCellRealY(cell);
             CellMapAdapter cellMapAdapter = CellMapAdapter.getAdapterByCell(cell, this);
             if (cellMapAdapter == null) {
                 g.drawRect(cellRealX, cellRealY, cellWidth, cellHeight);
@@ -66,4 +97,9 @@ public class MapViewer extends JPanel {
     public void setPaddingRight(int paddingRight) {
         this.paddingRight = paddingRight;
     }
+
+    public void addCellClickedListener(CellClickedListener listener){
+        cellClickedListenerList.add(listener);
+    }
+
 }

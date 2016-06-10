@@ -14,6 +14,9 @@ public class GameFrame extends JFrame{
     public GameFrame() {
         setLayout(new BorderLayout());
         mapViewer = new MapViewer();
+        mapViewer.addCellClickedListener(cell->{
+            System.out.println(cell.getName());
+        });
         add(mapViewer, BorderLayout.CENTER);
         pack();
         setTitle("Monopoly 2");

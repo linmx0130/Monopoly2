@@ -1,20 +1,21 @@
 package gui.map;
 
 import monopoly.cell.AbstractCell;
+
 import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by Mengxiao Lin on 2016/6/9.
+ * Created by Mengxiao Lin on 2016/6/10.
  */
-public class BankCellAdapter extends CellMapAdapter{
+public class CardCellAdapter extends CellMapAdapter {
     private MapViewer viewer;
     private static ImageIcon icon;
-    public BankCellAdapter(AbstractCell cell, MapViewer viewer) {
+    public CardCellAdapter(AbstractCell cell, MapViewer viewer) {
         super(cell, viewer);
         this.viewer = viewer;
         if (icon == null){
-            icon = new ImageIcon(getClass().getResource("/image/bank.png"));
+            icon = new ImageIcon(getClass().getResource("/image/card.png"));
         }
     }
 

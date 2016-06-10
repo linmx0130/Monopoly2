@@ -1,7 +1,6 @@
 package gui.map;
 
-import monopoly.cell.AbstractCell;
-import monopoly.cell.BankCell;
+import monopoly.cell.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +19,14 @@ public abstract class CellMapAdapter {
 
     private static Map<Class, Class> cellAdapterMap = new HashMap<>();
     static {
-        CellMapAdapter.registerAdapter(BankCell.class, BankCellAdapter.class);
+        registerAdapter(BankCell.class, BankCellAdapter.class);
+        registerAdapter(NewsCell.class, NewsCellAdapter.class);
+        registerAdapter(CardCell.class, CardCellAdapter.class);
+        registerAdapter(CardShopCell.class, CardShopCellAdapter.class);
+        registerAdapter(CouponCell.class, CouponCellAdapter.class);
+        registerAdapter(LotteryCell.class, LotteryCellAdapter.class);
+        registerAdapter(PropertyCell.class, PropertyCellAdapter.class);
+        registerAdapter(EmptyCell.class, EmptyCellAdapter.class);
     }
     /**
      * Register a cell adapter.
