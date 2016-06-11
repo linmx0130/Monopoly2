@@ -143,7 +143,7 @@ public class Kernel {
         }
         return ret;
     }
-
+    @Deprecated
     public void playerMove(){
         Player currentPlayer = players[this.currentPlayer];
         AbstractCell nowPos = gameMap.getPlayerPosition(currentPlayer);
@@ -152,12 +152,37 @@ public class Kernel {
         gameMap.setPlayerToCell(currentPlayer, nowPos);
         nowPos.moveOverEffect(currentPlayer);
     }
+    public void playerMoveWithoutEffect(){
+        Player currentPlayer = players[this.currentPlayer];
+        AbstractCell nowPos = gameMap.getPlayerPosition(currentPlayer);
+        if (currentPlayer.getOrientation() == 1) nowPos = nowPos.getNextCell();
+        else nowPos = nowPos.getPreviousCell();
+        gameMap.setPlayerToCell(currentPlayer, nowPos);
+    }
+    public void playerMoveEffect(){
+        Player currentPlayer = players[this.currentPlayer];
+        AbstractCell nowPos = gameMap.getPlayerPosition(currentPlayer);
+        nowPos.moveOverEffect(currentPlayer);
+    }
+    @Deprecated
     public void playerMoveEnd(){
         Player currentPlayer = players[this.currentPlayer];
         AbstractCell nowPos = gameMap.getPlayerPosition(currentPlayer);
         if (currentPlayer.getOrientation() == 1) nowPos = nowPos.getNextCell();
         else nowPos = nowPos.getPreviousCell();
         gameMap.setPlayerToCell(currentPlayer, nowPos);
+        nowPos.arrivedEffect(currentPlayer);
+    }
+    public void playerMoveEndWithoutEffect(){
+        Player currentPlayer = players[this.currentPlayer];
+        AbstractCell nowPos = gameMap.getPlayerPosition(currentPlayer);
+        if (currentPlayer.getOrientation() == 1) nowPos = nowPos.getNextCell();
+        else nowPos = nowPos.getPreviousCell();
+        gameMap.setPlayerToCell(currentPlayer, nowPos);
+    }
+    public void playerMoveEndEffect(){
+        Player currentPlayer = players[this.currentPlayer];
+        AbstractCell nowPos = gameMap.getPlayerPosition(currentPlayer);
         nowPos.arrivedEffect(currentPlayer);
     }
     public void initPlayers(){

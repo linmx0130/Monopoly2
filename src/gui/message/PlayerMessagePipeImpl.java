@@ -3,6 +3,7 @@ package gui.message;
 import message.Message;
 import message.MessagePipe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ public class PlayerMessagePipeImpl implements MessagePipe {
 
     public PlayerMessagePipeImpl(MessagePipe realPipe) {
         this.realPipe = realPipe;
+        messageStorage = new ArrayList<>();
     }
 
     @Override

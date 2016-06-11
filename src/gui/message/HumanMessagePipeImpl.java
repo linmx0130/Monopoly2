@@ -10,6 +10,6 @@ import message.MessagePipe;
 public class HumanMessagePipeImpl implements MessagePipe{
     @Override
     public void onMessageArrived(Message message) {
-
+        message.action();
     }
 }
