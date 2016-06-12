@@ -72,10 +72,9 @@ public class GameFrame extends JFrame{
                 kernel.playerMoveEndWithoutEffect();
                 mapViewer.repaint();
                 kernel.playerMoveEndEffect();
-                showCurrentPlayer();
                 ((PlayerMessagePipeImpl)kernel.getMessagePipe()).setActive(false);
                 kernel.nextPlayer();
-
+                showCurrentPlayer();
             });
             t.start();
         });

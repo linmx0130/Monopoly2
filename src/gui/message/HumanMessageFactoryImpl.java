@@ -18,6 +18,8 @@ public class HumanMessageFactoryImpl implements MessageFactory{
         registerMessageType("BankMessage", BankMessageImpl.class);
         registerMessageType("YesOrNoQuestion", YesOrNoQuestionImpl.class);
         registerMessageType("SuccessMessage", SuccessMessageImpl.class);
+        registerMessageType("PropertyMessage", PropertyMessageImpl.class);
+        registerMessageType("LotteryQuestion", LotteryQuestionImpl.class);
     }
     public void registerMessageType(String typename, Class typeClass) {
         this.messageTypeClassMap.put(typename, typeClass);

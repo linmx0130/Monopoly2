@@ -17,9 +17,6 @@ public class LotteryCell extends AbstractCell{
         LotteryQuestion question = (LotteryQuestion) Kernel.getInstance().getMessageFactory().createMessage("LotteryQuestion");
         question.setPlayer(player);
         Kernel.getInstance().getMessagePipe().onMessageArrived(question);
-        int choose = question.getChoose();
-        double value = question.getValue();
-        Kernel.getInstance().getLottery().buyLottery(player, choose, value);
     }
 
     @Override
