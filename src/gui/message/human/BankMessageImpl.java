@@ -1,5 +1,6 @@
 package gui.message.human;
 
+import gui.BankDialog;
 import message.BankMessage;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ import javax.swing.*;
 public class BankMessageImpl extends BankMessage {
     @Override
     public void action() {
-        //TODO: make the bank
-        JOptionPane.showConfirmDialog(null, "BANK!","BANK!",JOptionPane.DEFAULT_OPTION);
+        BankDialog bankDialog = new BankDialog(getPlayer());
+        bankDialog.setVisible(true);
     }
 }

@@ -62,6 +62,7 @@ public class GameFrame extends JFrame{
                     kernel.playerMoveWithoutEffect();
                     mapViewer.repaint();
                     kernel.playerMoveEffect();
+                    showCurrentPlayer();
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e1) {
@@ -71,6 +72,7 @@ public class GameFrame extends JFrame{
                 kernel.playerMoveEndWithoutEffect();
                 mapViewer.repaint();
                 kernel.playerMoveEndEffect();
+                showCurrentPlayer();
                 ((PlayerMessagePipeImpl)kernel.getMessagePipe()).setActive(false);
                 kernel.nextPlayer();
 
