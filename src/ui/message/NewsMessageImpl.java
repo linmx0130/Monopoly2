@@ -8,7 +8,6 @@ import message.NewsMessage;
 public class NewsMessageImpl extends NewsMessage {
     @Override
     public void action() {
-        effect.action(this,getPlayer());
         System.out.println(getDescription());
     }
 }

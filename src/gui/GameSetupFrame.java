@@ -169,8 +169,11 @@ public class GameSetupFrame extends JFrame {
         ret.add(newPlayerPanel, BorderLayout.NORTH);
 
         addPlayerBtn.addActionListener(e -> {
+            if (newPlayerNameTextField.getText().trim().length() == 0){
+                return;
+            }
             PlayerNameAdapter adapter = new PlayerNameAdapter(
-                    newPlayerNameTextField.getText(),
+                    newPlayerNameTextField.getText().trim(),
                     isAICheckBox.isSelected());
             playerListModel.addElement(adapter);
             newPlayerNameTextField.setText("");

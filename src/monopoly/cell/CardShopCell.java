@@ -50,4 +50,9 @@ public class CardShopCell extends AbstractCell {
             }
         }while (choose !=null);
     }
+
+    @Override
+    public void moveOverEffect(Player player) {
+        arrivedEffect(player);
+    }
 }

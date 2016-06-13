@@ -18,6 +18,7 @@ public class LotteryDialog extends JDialog {
     private void randomChoose(){
         Random random = new Random();
         int choose = random.nextInt()%10;
+        if (choose<0) choose+=10;
         numberToBuy.setSelectedIndex(choose);
     }
     private JPanel buildNumberComboBox(){

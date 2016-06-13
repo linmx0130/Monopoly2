@@ -1,8 +1,10 @@
 package gui.message;
 
 import gui.message.human.*;
+import message.CardShopQuestion;
 import message.Message;
 import message.MessageFactory;
+import message.NewsMessage;
 
 import java.util.HashMap;
 
@@ -20,6 +22,8 @@ public class HumanMessageFactoryImpl implements MessageFactory{
         registerMessageType("SuccessMessage", SuccessMessageImpl.class);
         registerMessageType("PropertyMessage", PropertyMessageImpl.class);
         registerMessageType("LotteryQuestion", LotteryQuestionImpl.class);
+        registerMessageType("NewsMessage", NewsMessageImpl.class);
+        registerMessageType("CardShopQuestion", CardShopQuestionImpl.class);
     }
     public void registerMessageType(String typename, Class typeClass) {
         this.messageTypeClassMap.put(typename, typeClass);

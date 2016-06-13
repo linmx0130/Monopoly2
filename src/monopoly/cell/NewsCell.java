@@ -101,9 +101,11 @@ public class NewsCell extends AbstractCell {
     public void arrivedEffect(Player player) {
         NewsMessage newsMessage = (NewsMessage) Kernel.getInstance().getMessageFactory().createMessage("NewsMessage");
         int effectId = (new Random()).nextInt(effects.size());
-        newsMessage.setEffect(effects.get(effectId));
+        NewsMessage.NewsEffect effectToPerform = effects.get(effectId);
+        newsMessage.setEffect(effectToPerform);
         newsMessage.setDescription(effectDescriptions.get(effectId));
         newsMessage.setPlayer(player);
+        effectToPerform.action(newsMessage, player);
         Kernel.getInstance().getMessagePipe().onMessageArrived(newsMessage);
     }
 }
