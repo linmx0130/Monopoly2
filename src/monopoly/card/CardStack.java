@@ -19,6 +19,8 @@ public class CardStack {
         }
         if (card.isLongTermCard()){
             longTermCards.add(card);
+        }else {
+            card.cardEffect();
         }
         return true;
     }
