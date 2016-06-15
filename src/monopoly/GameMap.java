@@ -98,7 +98,10 @@ public class GameMap {
 
     public int getDistanceBetweenCells(AbstractCell c1, AbstractCell c2){
         int count = 0 ;
-        while (c1!= c2) c1= c1.getNextCell();
+        while (c1!= c2) {
+            c1= c1.getNextCell();
+            count++;
+        }
         if (cellList.size() - count < count) count = cellList.size() -count;
         return count;
     }

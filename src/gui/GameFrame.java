@@ -60,9 +60,11 @@ public class GameFrame extends JFrame{
                 JOptionPane.showConfirmDialog(GameFrame.this, cardToUse.getName()+" 使用失败！", "使用道具卡",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
             }
+            mapViewer.repaint();
         });
         nextPlayerBtn.addActionListener(e->{
             Thread t = new Thread(()->{
+                nextPlayerBtn.setEnabled(false);
                 Kernel kernel = Kernel.getInstance();
                 Random random=new Random();
                 int step = random.nextInt(6)+1;
@@ -94,6 +96,7 @@ public class GameFrame extends JFrame{
                 ((PlayerMessagePipeImpl)kernel.getMessagePipe()).setActive(false);
                 kernel.nextPlayer();
                 showCurrentPlayer();
+                nextPlayerBtn.setEnabled(true);
             });
             t.start();
         });

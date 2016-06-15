@@ -50,6 +50,7 @@ public class ChoosePlayerDialog extends JDialog {
         add(playerComboBox, BorderLayout.CENTER);
         add(buildBtnPanel(showCancelBtn), BorderLayout.SOUTH);
         pack();
+        setLocationRelativeTo(null);
         setTitle("选择玩家");
         setModal(true);
     }

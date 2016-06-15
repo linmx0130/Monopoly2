@@ -1,6 +1,7 @@
 package message;
 
 import monopoly.Player;
+import monopoly.cell.AbstractCell;
 
 /**
  * Created by Mengxiao Lin on 2016/4/17.
@@ -8,6 +9,7 @@ import monopoly.Player;
 public abstract  class RoadBlockCardQuestion implements Question {
     private Player subject;
     private int choose;
+
     public Player getSubject() {
         return subject;
     }
@@ -23,5 +25,9 @@ public abstract  class RoadBlockCardQuestion implements Question {
 
     public void setChoose(int choose) {
         this.choose = choose;
+    }
+
+    public AbstractCell getCellChosen(){
+        return null;
     }
 }

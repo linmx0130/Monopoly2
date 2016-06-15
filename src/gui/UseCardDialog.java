@@ -13,7 +13,6 @@ import java.util.ArrayList;
 public class UseCardDialog extends JDialog {
     class CardAdapter{
         AbstractCard card;
-
         public CardAdapter(AbstractCard card) {
             this.card = card;
         }
@@ -26,6 +25,7 @@ public class UseCardDialog extends JDialog {
     private JList<CardAdapter> cardList;
     private DefaultListModel<CardAdapter> cardListModel;
     private AbstractCard cardChosen;
+    private JLabel tipsLabel;
 
     private JPanel getBottomPanel(){
         JPanel ret = new JPanel(new BorderLayout());
@@ -59,16 +59,23 @@ public class UseCardDialog extends JDialog {
         setLayout(new BorderLayout());
         cardListModel = new DefaultListModel<>();
         cardList = new JList<>(cardListModel);
-        cards.forEach(c-> cardListModel.addElement(new CardAdapter(c)));
+        cards.forEach(c->cardListModel.addElement(new CardAdapter(c)));
         cardList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        add(new JLabel("请选择一张道具卡发动。"), BorderLayout.NORTH);
-        add(cardList, BorderLayout.CENTER);
+        tipsLabel = new JLabel("请选择一张道具卡发动。");
+        add(tipsLabel, BorderLayout.NORTH);
+        JScrollPane listPane = new JScrollPane(cardList, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        add(listPane, BorderLayout.CENTER);
         add(getBottomPanel(), BorderLayout.SOUTH);
+        cardList.addListSelectionListener(e->{
+            int selected = e.getFirstIndex();
+            AbstractCard card = cardListModel.get(selected).card;
+            tipsLabel.setText(card.getDescription());
+            pack();
+        });
         setModal(true);
-        setLocationRelativeTo(null);
-        setMinimumSize(new Dimension(200,300));
+        setMinimumSize(new Dimension(200,150));
         pack();
+        setLocationRelativeTo(null);
         setTitle("使用道具卡");
     }
 

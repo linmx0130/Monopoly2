@@ -29,6 +29,7 @@ public class BankDialog extends JDialog {
         storeBtn.addActionListener(e->{
             final String info =  "请输入存款的金额（0~"+ String.format("%.2f",player.getMoney())+"）。";
             final String input= JOptionPane.showInputDialog(BankDialog.this, info, "银行", JOptionPane.QUESTION_MESSAGE);
+            if (input == null) return ;
             try {
                 final double value = Double.parseDouble(input);
                 if (value<0) throw new NumberFormatException();
@@ -49,6 +50,7 @@ public class BankDialog extends JDialog {
             double deposit = bank.getDeposit(player);
             final String info =  "请输入取款的金额（0~"+ String.format("%.2f",deposit)+"）。";
             final String input= JOptionPane.showInputDialog(BankDialog.this, info, "银行", JOptionPane.QUESTION_MESSAGE);
+            if (input== null) return ;
             try {
                 final double value = Double.parseDouble(input);
                 if (value<0) throw new NumberFormatException();

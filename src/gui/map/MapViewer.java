@@ -20,6 +20,7 @@ public class MapViewer extends JPanel {
     private int paddingLeft = 10;
     private int paddingRight = 10;
     public ArrayList<CellClickedListener> cellClickedListenerList;
+    private ImageIcon roadBlockIcon;
     private GameMap gameMap;
     private ArrayList<ImageIcon> playersIconList;
     private final int PLAYER_OFFSET[][] = {{0,0},{0,1},{1,0},{1,1}};
@@ -35,6 +36,7 @@ public class MapViewer extends JPanel {
         gameMap = Kernel.getInstance().getGameMap();
         cellClickedListenerList = new ArrayList<>();
         loadPlayersIcon();
+        roadBlockIcon = new ImageIcon(getClass().getResource("/image/road_block.png"));
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -82,6 +84,9 @@ public class MapViewer extends JPanel {
             }else{
                 g.drawImage(cellMapAdapter.getImage(), cellRealX,cellRealY, cellWidth,cellHeight,null);
             }
+            if (cell.hasRoadBlock()){
+                g.drawImage(roadBlockIcon.getImage(), cellRealX,cellRealY, cellWidth/3, cellHeight/3,null);
+            }
         }
         //draw players
         for (Player player : Kernel.getInstance().getPlayers()){
@@ -89,7 +94,6 @@ public class MapViewer extends JPanel {
             int iconWidth = cellWidth/2, iconHeight = cellHeight/2;
             int targetX = getCellRealX(currentCell)+PLAYER_OFFSET[player.getId()-1][0] * (iconWidth+2);
             int targetY = getCellRealY(currentCell)+PLAYER_OFFSET[player.getId()-1][1] * (iconHeight+2);
-
             g.drawImage(playersIconList.get(player.getId()-1).getImage(), targetX,targetY,iconWidth, iconHeight,null);
         }
         return ret;

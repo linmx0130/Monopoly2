@@ -24,16 +24,20 @@ public class RoadBlockCard extends AbstractCard {
         RoadBlockCardQuestion question = (RoadBlockCardQuestion)Kernel.getInstance().getMessageFactory().createMessage("RoadBlockCardQuestion");
         question.setSubject(subject);
         Kernel.getInstance().getMessagePipe().onMessageArrived(question);
-        objectCell = Kernel.getInstance().getGameMap().getPlayerPosition(subject);
         if (Math.abs(question.getChoose())> 8) return false;
-        if (question.getChoose() < 0){
-            for (int choose = -question.getChoose(); choose >0; --choose){
-                objectCell = objectCell.getPreviousCell();
+        if (question.getCellChosen() == null) {
+            objectCell = Kernel.getInstance().getGameMap().getPlayerPosition(subject);
+            if (question.getChoose() < 0){
+                for (int choose = -question.getChoose(); choose >0; --choose){
+                    objectCell = objectCell.getPreviousCell();
+                }
+            }else{
+                for (int choose = question.getChoose(); choose >0; --choose){
+                    objectCell = objectCell.getNextCell();
+                }
             }
         }else{
-            for (int choose = question.getChoose(); choose >0; --choose){
-                objectCell = objectCell.getNextCell();
-            }
+            objectCell = question.getCellChosen();
         }
         objectCell.addARoadBlock();
         leftTurn = 8;
