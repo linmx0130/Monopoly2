@@ -29,6 +29,8 @@ public class CellFactory {
                 return new CardShopCell(id);
             case "LotteryCell":
                 return new LotteryCell(id);
+            case "HospitalCell":
+                return new HospitalCell(id);
             default:
 
         }

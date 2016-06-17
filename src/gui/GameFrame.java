@@ -94,9 +94,19 @@ public class GameFrame extends JFrame{
                 mapViewer.repaint();
                 kernel.playerMoveEndEffect();
                 ((PlayerMessagePipeImpl)kernel.getMessagePipe()).setActive(false);
-                kernel.nextPlayer();
-                showCurrentPlayer();
                 nextPlayerBtn.setEnabled(true);
+                do {
+                    kernel.nextPlayer();
+                    showCurrentPlayer();
+                    if (kernel.getCurrentPlayer().getPauseTurn()!=0){
+                        kernel.getCurrentPlayer().setPauseTurn(kernel.getCurrentPlayer().getPauseTurn()-1);
+                        JOptionPane.showConfirmDialog(GameFrame.this,
+                                "玩家"+kernel.getCurrentPlayer().getName()+"受伤，跳过本回合！",
+                                "Monopoly 2",JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                    }else{
+                        break;
+                    }
+                }while (true);
             });
             t.start();
         });

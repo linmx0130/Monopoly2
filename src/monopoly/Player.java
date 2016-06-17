@@ -16,9 +16,10 @@ public class Player {
     private ArrayList<AbstractCard> cards;
     private String name;
     private boolean isLost;
-    int id;
-    int orientation;
-    int coupon;
+    private int id;
+    private int orientation;
+    private int coupon;
+    private int pauseTurn;
     public Player(String name){
         this.name=name;
         propertyCells = new ArrayList<>();
@@ -155,5 +156,13 @@ public class Player {
 
     public void setLost(boolean lost) {
         isLost = lost;
+    }
+
+    public int getPauseTurn() {
+        return pauseTurn;
+    }
+
+    public void setPauseTurn(int pauseTurn) {
+        this.pauseTurn = pauseTurn;
     }
 }

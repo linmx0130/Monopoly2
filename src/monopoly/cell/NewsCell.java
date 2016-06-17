@@ -93,6 +93,8 @@ public class NewsCell extends AbstractCell {
                 player.addCard(Kernel.getInstance().getCardFactory().generateRandomCard())
             ));
         effectDescriptions.add("每个人得到一张卡片。");
+
+        //TODO: News 6 go to hospital
     }
     public NewsCell(int id){
         super(id, "新闻点", "专门负责搞大新闻。");

@@ -26,6 +26,7 @@ public class HumanMessageFactoryImpl implements MessageFactory{
         registerMessageType("CardShopQuestion", CardShopQuestionImpl.class);
         registerMessageType("GameOverMessage",GameOverMessageImpl.class);
         registerMessageType("RoadBlockCardQuestion", RoadBlockCardQuestionImpl.class);
+        registerMessageType("DiceControllerQuestion", DiceControllerQuestionImpl.class);
     }
     public void registerMessageType(String typename, Class typeClass) {
         this.messageTypeClassMap.put(typename, typeClass);
