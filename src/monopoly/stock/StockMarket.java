@@ -107,6 +107,9 @@ public class StockMarket {
         return true;
     }
     public HashMap<Stock, Integer> getStockHold(Player player){
+        if (!stockHold.containsKey(player)){
+            stockHold.put(player,new HashMap<>());
+        }
         return stockHold.get(player);
     }
     public double getTotalHold(Player player){

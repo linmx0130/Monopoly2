@@ -53,6 +53,7 @@ public class WelcomeFrame extends JFrame {
 
             JPanel btnPanel = new JPanel(new BorderLayout());
             JButton okBtn = new JButton("关闭");
+            okBtn.addActionListener(e-> setVisible(false));
             btnPanel.add(okBtn,BorderLayout.EAST);
             add(btnPanel,BorderLayout.SOUTH);
             setTitle("关于");

@@ -121,6 +121,10 @@ public class GameFrame extends JFrame{
                 showCurrentPlayer();
             }
         });
+        stockBtn.addActionListener(e->{
+            StockFrame dialog = new StockFrame();
+            dialog.setVisible(true);
+        });
         return bottomBtnPanel;
     }
     private JPanel buildPlayerInformationBoard(){
