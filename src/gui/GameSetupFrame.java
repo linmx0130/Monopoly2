@@ -43,7 +43,7 @@ public class GameSetupFrame extends JFrame {
     private DefaultListModel<PlayerNameAdapter> playerListModel;
     private JTextField newPlayerNameTextField;
     private JFrame parentFrame;
-    private JCheckBox isAICheckBox;
+    //private JCheckBox isAICheckBox;
     private ArrayList<Pair<String, String>> mapList;
 
     private void closeAndReturnWelcome() {
@@ -116,9 +116,15 @@ public class GameSetupFrame extends JFrame {
         cancelBtn.addActionListener(e -> closeAndReturnWelcome());
         startGameBtn = new JButton("开始游戏");
         startGameBtn.addActionListener(e->{
+            if (playerListModel.size() <2){
+                JOptionPane.showConfirmDialog(GameSetupFrame.this,"玩家太少，无法开始游戏！", "Monopoly 2",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
+                return ;
+            }
             setUpKernel();
             GameFrame f = new GameFrame();
             f.setVisible(true);
+            setVisible(false);
         });
         btnPanel.add(cancelBtn);
         btnPanel.add(startGameBtn);
@@ -162,8 +168,8 @@ public class GameSetupFrame extends JFrame {
         newPlayerPanel.add(newPlayerNameTextField);
         JPanel newPlayerBtnPanel = new JPanel(new BorderLayout());
         JButton addPlayerBtn = new JButton("添加玩家");
-        isAICheckBox = new JCheckBox("AI玩家");
-        newPlayerBtnPanel.add(isAICheckBox,BorderLayout.WEST);
+        //isAICheckBox = new JCheckBox("AI玩家");
+        //newPlayerBtnPanel.add(isAICheckBox,BorderLayout.WEST);
         newPlayerBtnPanel.add(addPlayerBtn,BorderLayout.CENTER);
         newPlayerPanel.add(newPlayerBtnPanel, BorderLayout.EAST);
         ret.add(newPlayerPanel, BorderLayout.NORTH);
@@ -172,12 +178,17 @@ public class GameSetupFrame extends JFrame {
             if (newPlayerNameTextField.getText().trim().length() == 0){
                 return;
             }
+            if (playerListModel.size()>=4){
+                JOptionPane.showConfirmDialog(GameSetupFrame.this, "本游戏只支持最多4个玩家，无法继续添加！",
+                        "Monopoly 2", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
+                return ;
+            }
             PlayerNameAdapter adapter = new PlayerNameAdapter(
-                    newPlayerNameTextField.getText().trim(),
-                    isAICheckBox.isSelected());
+                    newPlayerNameTextField.getText().trim(), false);
+                    //isAICheckBox.isSelected());
             playerListModel.addElement(adapter);
             newPlayerNameTextField.setText("");
-            isAICheckBox.setSelected(false);
+            //isAICheckBox.setSelected(false);
         });
 
         JPopupMenu listPopupMenu = new JPopupMenu();

@@ -30,10 +30,12 @@ public class GameFrame extends JFrame{
         JButton nextPlayerBtn = new JButton("投骰子结束我的回合！");
         JButton useCardBtn = new JButton("使用道具卡");
         JButton stockBtn = new JButton("进入股市");
+        JButton showStatBtn = new JButton("查看所有玩家资产");
         JButton giveUpBtn = new JButton("认输");
-        JPanel bottomBtnPanel =new JPanel(new GridLayout(4,1));
+        JPanel bottomBtnPanel =new JPanel(new GridLayout(5,1));
         bottomBtnPanel.add(useCardBtn);
         bottomBtnPanel.add(stockBtn);
+        bottomBtnPanel.add(showStatBtn);
         bottomBtnPanel.add(giveUpBtn);
         bottomBtnPanel.add(nextPlayerBtn);
         useCardBtn.addActionListener(_e->{
@@ -84,6 +86,7 @@ public class GameFrame extends JFrame{
                     kernel.playerMoveWithoutEffect();
                     mapViewer.repaint();
                     kernel.playerMoveEffect();
+                    mapViewer.repaint();
                     showCurrentPlayer();
                     try {
                         Thread.sleep(500);
@@ -95,6 +98,7 @@ public class GameFrame extends JFrame{
                 mapViewer.repaint();
                 kernel.playerMoveEndEffect();
                 mapViewer.repaint();
+                showCurrentPlayer();
                 ((PlayerMessagePipeImpl)kernel.getMessagePipe()).setActive(false);
                 nextPlayerBtn.setEnabled(true);
                 do {
@@ -123,6 +127,10 @@ public class GameFrame extends JFrame{
         });
         stockBtn.addActionListener(e->{
             StockFrame dialog = new StockFrame();
+            dialog.setVisible(true);
+        });
+        showStatBtn.addActionListener(e->{
+            PlayerPropertyStatDialog dialog = new PlayerPropertyStatDialog();
             dialog.setVisible(true);
         });
         return bottomBtnPanel;
@@ -165,6 +173,7 @@ public class GameFrame extends JFrame{
         showCurrentPlayer();
         pack();
         setTitle("Monopoly 2");
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }
 
