@@ -27,6 +27,7 @@ public abstract class CellMapAdapter {
         registerAdapter(LotteryCell.class, LotteryCellAdapter.class);
         registerAdapter(PropertyCell.class, PropertyCellAdapter.class);
         registerAdapter(EmptyCell.class, EmptyCellAdapter.class);
+        registerAdapter(HospitalCell.class, HospitalCellAdapter.class);
     }
     /**
      * Register a cell adapter.

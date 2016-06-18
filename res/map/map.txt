@@ -30,7 +30,7 @@
 29 PropertyCell 7 1 子彬院 4 3000
 30 PropertyCell 7 0 档案馆 4 1500
 31 NewsCell 6 0
-32 BankCell 5 0
+32 HospitalCell 5 0
 33 PropertyCell 4 0 物理楼 5 2000
 34 PropertyCell 3 0 毛像 5 1500
 35 PropertyCell 2 0 文科楼 5 2400

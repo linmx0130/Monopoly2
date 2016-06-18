@@ -15,8 +15,9 @@ public class HospitalCell extends AbstractCell {
     @Override
     public void arrivedEffect(Player player) {
         FaultMessage faultMessage = (FaultMessage) Kernel.getInstance().getMessageFactory().createMessage("FaultMessage");
-        faultMessage.setDescription("玩家受伤进入医院，停留两回合！");
+        faultMessage.setDescription("玩家"+player.getName()+"受伤进入医院，停留两回合！");
         player.setPauseTurn(2);
+        player.setOrientation(-player.getOrientation());
         Kernel.getInstance().getMessagePipe().onMessageArrived(faultMessage);
     }
 }

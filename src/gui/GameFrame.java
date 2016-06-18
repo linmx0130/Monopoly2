@@ -17,6 +17,7 @@ public class GameFrame extends JFrame{
     private MapViewer mapViewer;
     private FormItemTextField playerNameTextField;
     private FormItemTextField cashTextField;
+    private FormItemTextField dateField;
     private DiceShower diceShower;
     private JPanel buildNameTextField(){
         playerNameTextField = new FormItemTextField("玩家名");
@@ -93,6 +94,7 @@ public class GameFrame extends JFrame{
                 kernel.playerMoveEndWithoutEffect();
                 mapViewer.repaint();
                 kernel.playerMoveEndEffect();
+                mapViewer.repaint();
                 ((PlayerMessagePipeImpl)kernel.getMessagePipe()).setActive(false);
                 nextPlayerBtn.setEnabled(true);
                 do {
@@ -124,12 +126,15 @@ public class GameFrame extends JFrame{
     private JPanel buildPlayerInformationBoard(){
         JPanel ret = new JPanel(new BorderLayout());
 
-        JPanel topPanel =new JPanel(new GridLayout(2,1));
+        JPanel topPanel =new JPanel(new GridLayout(3,1));
         cashTextField = new FormItemTextField("现金：");
         cashTextField.setEnabled(false);
+        dateField = new FormItemTextField("当前日期：");
+        dateField.setEnabled(false);
         diceShower = new DiceShower();
         topPanel.add(buildNameTextField());
         topPanel.add(cashTextField);
+        topPanel.add(dateField);
 
         JPanel upPanel = new JPanel(new BorderLayout());
         upPanel.add(topPanel, BorderLayout.NORTH);
@@ -165,5 +170,6 @@ public class GameFrame extends JFrame{
         playerNameTextField.getTextField().setDisabledTextColor(Constant.PLAYER_COLOR[player.getId()-1]);
         cashTextField.setText(String.format("%.2f",player.getMoney()));
         ((PlayerMessagePipeImpl)Kernel.getInstance().getMessagePipe()).setActive(true);
+        dateField.setText(Kernel.getInstance().getCurrentDate().toString());
     }
 }

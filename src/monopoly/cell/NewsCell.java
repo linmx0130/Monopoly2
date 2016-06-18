@@ -94,7 +94,20 @@ public class NewsCell extends AbstractCell {
             ));
         effectDescriptions.add("每个人得到一张卡片。");
 
-        //TODO: News 6 go to hospital
+        //News 6
+        effects.add( (message, player) ->{
+            HospitalCell hospital = (HospitalCell)Kernel.getInstance().getGameMap().getCellList().stream()
+                    .filter(c-> c instanceof HospitalCell).findAny().get();
+            if (hospital == null){
+                //panic
+                System.out.println("No hospital!");
+            }else{
+                Kernel.getInstance().getGameMap().setPlayerToCell(player, hospital);
+                hospital.arrivedEffect(player);
+            }
+            message.setDescription(player.getName()+message.getDescription());
+        });
+        effectDescriptions.add("遇到交通事故，被送入医院！");
     }
     public NewsCell(int id){
         super(id, "新闻点", "专门负责搞大新闻。");
@@ -103,11 +116,12 @@ public class NewsCell extends AbstractCell {
     public void arrivedEffect(Player player) {
         NewsMessage newsMessage = (NewsMessage) Kernel.getInstance().getMessageFactory().createMessage("NewsMessage");
         int effectId = (new Random()).nextInt(effects.size());
+        effectId = 5;
         NewsMessage.NewsEffect effectToPerform = effects.get(effectId);
         newsMessage.setEffect(effectToPerform);
         newsMessage.setDescription(effectDescriptions.get(effectId));
         newsMessage.setPlayer(player);
-        effectToPerform.action(newsMessage, player);
         Kernel.getInstance().getMessagePipe().onMessageArrived(newsMessage);
+        effectToPerform.action(newsMessage, player);
     }
 }
